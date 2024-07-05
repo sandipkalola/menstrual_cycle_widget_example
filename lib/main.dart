@@ -1,10 +1,12 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:menstrual_cycle_widget/menstrual_cycle_phase_view.dart';
-import 'package:menstrual_cycle_widget/menstrual_cycle_utils.dart';
+import 'package:menstrual_cycle_widget/menstrual_cycle_widget.dart';
+import 'package:menstrual_cycle_widget_example/display_widget.dart';
+
+import 'custom_functions.dart';
 
 void main() {
+  MenstrualCycleWidget.init(
+      secretKey: "11a1215l0119a140409p0919", ivKey: "23a1dfr5lyhd9a1404845001");
   runApp(const MyApp());
 }
 
@@ -16,12 +18,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Menstrual Cycle Phases View Example',
+      title: 'Example',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Menstrual Cycle Phases View'),
+      home: const MyHomePage(title: ' View'),
     );
   }
 }
@@ -36,6 +38,44 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final instance = MenstrualCycleWidget.instance!;
+
+  @override
+  void initState() {
+    super.initState();
+    instance.updateConfiguration(
+        cycleLength: 28, periodDuration: 5, userId: "1");
+  }
+
+  Widget getWidget({Widget? displayWidget, String? title}) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) =>
+                DisplayWidget(displayWidget: displayWidget, title: title),
+          ),
+        );
+      },
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          padding: const EdgeInsets.all(8),
+          decoration: const BoxDecoration(
+            color: Colors.blue,
+            shape: BoxShape.rectangle,
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+          ),
+          child: Text(
+            title!,
+            style: const TextStyle(
+                fontWeight: FontWeight.bold, color: Colors.white),
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,35 +86,102 @@ class _MyHomePageState extends State<MyHomePage> {
           style: const TextStyle(fontSize: 20),
         ),
       ),
-      body: const Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Center(
-              child: MenstrualCyclePhaseView(
-                size: 300,
-                totalCycleDays: 28,
-                menstruationDayCount: 5,
-                follicularDayCount: 7,
-                selectedDay: 12,
-                ovulationDayCount: 5,
-               // imageAssets: "assets/img6.png",
-                theme: MenstrualCycleTheme.arcs,
-                phaseTextBoundaries: PhaseTextBoundaries.outside,
-                isRemoveBackgroundPhaseColor: true,
-                // centralCircleBackgroundColor: Colors.transparent,
-                 viewType: MenstrualCycleViewType.text,
-                // title: "Today 10th March",
-               //arcStrokeWidth: 50,
-                // message: "Best way to sex",
+      body: Center(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            // Monthly Calender View
+            getWidget(
+                displayWidget: MenstrualCycleMonthlyCalenderView(
+                  themeColor: "000000",
+                  daySelectedColor: Colors.blue,
+                  hideInfoView: false,
+                  onDataChanged: (value) {},
+                ),
+                title: "Monthly Calender View"),
+            //Calender View
+            getWidget(
+                displayWidget: Center(
+                  child: MenstrualCycleCalenderView(
+                    themeColor: "000000",
+                    daySelectedColor: Colors.blue,
+                    logPeriodText: "Log Period",
+                    backgroundColorCode: "FFFFFF",
+                    hideInfoView: false,
+                    onDateSelected: (date) {},
+                    onDataChanged: (value) {},
+                    hideBottomBar: false,
+                    hideLogPeriodButton: false,
+                    isExpanded: false,
+                  ),
+                ),
+                title: "Calender View"),
+            // Menstrual Cycle Phase View
+            getWidget(
+                displayWidget: const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Center(
+                    child: MenstrualCyclePhaseView(
+                      size: 300,
+                      totalCycleDays: 28,
+                      menstruationDayCount: 5,
+                      follicularDayCount: 7,
+                      selectedDay: 12,
+                      ovulationDayCount: 5,
+                      imageAssets: "assets/img6.png",
+                      centralCircleSize: 55,
+                      imgSize: 60,
+                      theme: MenstrualCycleTheme.arcs,
+                      phaseTextBoundaries: PhaseTextBoundaries.outside,
+                      isRemoveBackgroundPhaseColor: true,
+                      viewType: MenstrualCycleViewType.text,
+                      title: "Day 12",
+                      titleTextSize: 25,
+                      spaceBtnTitleMessage: 25,
+                      message: "Ovulation in 1 Day",
+                      // title: "Today 10th March",
+                      //arcStrokeWidth: 50,
+                      // message: "Best way to sex",
+                    ),
+                  ),
+                ),
+                title: "Menstrual Cycle Phase View"),
+            GestureDetector(
+              child: Container(
+                padding: const EdgeInsets.all(8),
+                margin: const EdgeInsets.only(left: 5),
+                decoration: BoxDecoration(
+                  color: Colors.blue,
+                  shape: BoxShape.rectangle,
+                  border: Border.all(width: 1.0, color: Colors.blue),
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(10),
+                  ),
+                ),
+                height: 40,
+                width: 150,
+                child: const Center(
+                  child: Text(
+                    "Custom Functions",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.white),
+                  ),
+                ),
               ),
-            ),
-          ),
-        ],
-      ),
-      // This trailing comma makes auto-formatting nicer for build methods.
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const CustomFunctions(),
+                  ),
+                );
+              },
+            )
+            /* ,*/
+          ],
+        ),
+      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
