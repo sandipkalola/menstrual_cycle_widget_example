@@ -5,6 +5,8 @@ import 'package:menstrual_cycle_widget_example/display_widget.dart';
 import 'custom_functions.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
   MenstrualCycleWidget.init(
       secretKey: "11a1215l0119a140409p0919", ivKey: "23a1dfr5lyhd9a1404845001");
   runApp(const MyApp());
@@ -44,7 +46,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     instance.updateConfiguration(
-        cycleLength: 28, periodDuration: 5, userId: "1");
+        cycleLength: 31, periodDuration: 5, userId: "1");
   }
 
   Widget getWidget({Widget? displayWidget, String? title}) {
@@ -125,25 +127,14 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: Center(
                     child: MenstrualCyclePhaseView(
                       size: 300,
-                      totalCycleDays: 28,
-                      menstruationDayCount: 5,
-                      follicularDayCount: 7,
-                      selectedDay: 12,
-                      ovulationDayCount: 5,
-                      imageAssets: "assets/img6.png",
-                      centralCircleSize: 55,
-                      imgSize: 60,
                       theme: MenstrualCycleTheme.arcs,
                       phaseTextBoundaries: PhaseTextBoundaries.outside,
                       isRemoveBackgroundPhaseColor: true,
-                      viewType: MenstrualCycleViewType.text,
-                      title: "Day 12",
-                      titleTextSize: 25,
-                      spaceBtnTitleMessage: 25,
-                      message: "Ovulation in 1 Day",
-                      // title: "Today 10th March",
-                      //arcStrokeWidth: 50,
-                      // message: "Best way to sex",
+                      viewType: MenstrualCycleViewType.circleText,
+                      spaceBtnTitleMessage: 5,
+                      centralCircleSize: 100,
+                      centralCircleBackgroundColor: Color(0xFFE1F5FE),
+                      isAutoSetData: true,
                     ),
                   ),
                 ),
