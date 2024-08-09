@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:menstrual_cycle_widget/utils/model/PeriodsDateRange.dart';
+import 'package:menstrual_cycle_widget/menstrual_cycle_widget.dart';
 
 class PeriodRangeList extends StatefulWidget {
   List<PeriodsDateRange>? periodDateRange;
@@ -39,6 +39,8 @@ class _PeriodRangeListState extends State<PeriodRangeList> {
                       "Period End Date: ${widget.periodDateRange![index].periodEndDate}"),
                   Text(
                       "Period Duration: ${widget.periodDateRange![index].periodDuration}"),
+                  Text(
+                      "Cycle Duration: ${widget.periodDateRange![index].cycleDuration}"),
                   Text(
                       "Period Range: ${widget.periodDateRange![index].allPeriodDates.toString()}"),
                 ],

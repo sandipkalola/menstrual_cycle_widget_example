@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:menstrual_cycle_widget/menstrual_cycle_widget.dart';
-import 'package:menstrual_cycle_widget/utils/model/PeriodsDateRange.dart';
 
 import 'screens/period_range_list.dart';
 
@@ -18,7 +17,10 @@ class _CustomFunctionsState extends State<CustomFunctions> {
 
   DateTime? lastPeriodDate;
   String? lastPeriodDateRangeString;
+  String? lastPeriodDateDuration;
+
   String? periodDateRangeString;
+  int previousCycleLength = 0;
   String? avgPeriodDuration;
 
   @override
@@ -62,23 +64,23 @@ class _CustomFunctionsState extends State<CustomFunctions> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-                "Last Period Date: ${(lastPeriodDate == null) ? "N/A" : _dateFormat.format(lastPeriodDate!)}"),
+                "Previous Period Date: ${(lastPeriodDate == null) ? "N/A" : _dateFormat.format(lastPeriodDate!)}"),
             GestureDetector(
               onTap: () async {
-                lastPeriodDate = await instance.getLastPeriodDate();
+                lastPeriodDate = await instance.getPreviousPeriodDate();
                 setState(() {});
               },
-              child: getButton("Get Last Period Date"),
+              child: getButton("Get Previous Period Day"),
             ),
             const SizedBox(
               height: 20,
             ),
             Text(
-                "Last Period Date Range: ${(lastPeriodDateRangeString == null) ? "N/A" : lastPeriodDateRangeString}"),
+                "Previous Period Date Range: ${(lastPeriodDateRangeString == null) ? "N/A" : lastPeriodDateRangeString}"),
             GestureDetector(
               onTap: () async {
                 PeriodsDateRange lastPeriodDateRange =
-                    await instance.getLastPeriodDateRange();
+                    await instance.getPreviousPeriodDateRange();
                 if (lastPeriodDateRange.allPeriodDates!.isNotEmpty) {
                   lastPeriodDateRangeString =
                       lastPeriodDateRange.allPeriodDates!.toString();
@@ -87,7 +89,33 @@ class _CustomFunctionsState extends State<CustomFunctions> {
                 }
                 setState(() {});
               },
-              child: getButton("Get Last Period Date"),
+              child: getButton("Get Previous Period Dates"),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Text(
+                "Previous Period Duration: ${(lastPeriodDateDuration == null) ? "N/A" : lastPeriodDateDuration}"),
+            GestureDetector(
+              onTap: () async {
+                int lastPeriodDuration =
+                    await instance.getPreviousPeriodDuration();
+                lastPeriodDateDuration = lastPeriodDuration.toString();
+                setState(() {});
+              },
+              child: getButton("Get Previous Period Duration"),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Text("Previous Cycle Length: $previousCycleLength"),
+            GestureDetector(
+              onTap: () async {
+                int lastPeriodDuration = instance.getPreviousCycleLength();
+                previousCycleLength = lastPeriodDuration;
+                setState(() {});
+              },
+              child: getButton("Get Previous Cycle Length"),
             ),
             const SizedBox(
               height: 20,
@@ -112,7 +140,7 @@ class _CustomFunctionsState extends State<CustomFunctions> {
                 }
                 setState(() {});
               },
-              child: getButton("Get Period Range"),
+              child: getButton("Get All Period Range"),
             ),
             const SizedBox(
               height: 20,

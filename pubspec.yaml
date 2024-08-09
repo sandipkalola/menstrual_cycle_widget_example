@@ -12,6 +12,7 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.6
+  syncfusion_flutter_pdfviewer: ^26.2.5
   intl:
   menstrual_cycle_widget:
     path: ../menstrual_cycle_widget

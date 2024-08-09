@@ -3,6 +3,8 @@ import 'package:menstrual_cycle_widget/menstrual_cycle_widget.dart';
 import 'package:menstrual_cycle_widget_example/display_widget.dart';
 
 import 'custom_functions.dart';
+import 'screens/graph/all_graph_screen.dart';
+import 'screens/log_periods_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -97,7 +99,7 @@ class _MyHomePageState extends State<MyHomePage> {
             // Monthly Calender View
             getWidget(
                 displayWidget: MenstrualCycleMonthlyCalenderView(
-                  themeColor: "000000",
+                  themeColor: Colors.black,
                   daySelectedColor: Colors.blue,
                   hideInfoView: false,
                   onDataChanged: (value) {},
@@ -107,10 +109,10 @@ class _MyHomePageState extends State<MyHomePage> {
             getWidget(
                 displayWidget: Center(
                   child: MenstrualCycleCalenderView(
-                    themeColor: "000000",
+                    themeColor: Colors.black,
                     daySelectedColor: Colors.blue,
                     logPeriodText: "Log Period",
-                    backgroundColorCode: "FFFFFF",
+                    backgroundColorCode: Colors.white,
                     hideInfoView: false,
                     onDateSelected: (date) {},
                     onDataChanged: (value) {},
@@ -168,8 +170,107 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 );
               },
-            )
-            /* ,*/
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            GestureDetector(
+              child: Container(
+                padding: const EdgeInsets.all(8),
+                margin: const EdgeInsets.only(left: 5),
+                decoration: BoxDecoration(
+                  color: Colors.blue,
+                  shape: BoxShape.rectangle,
+                  border: Border.all(width: 1.0, color: Colors.blue),
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(10),
+                  ),
+                ),
+                height: 40,
+                width: 150,
+                child: const Center(
+                  child: Text(
+                    "Log Periods",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.white),
+                  ),
+                ),
+              ),
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => LogPeriodsScreen(),
+                  ),
+                );
+              },
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            GestureDetector(
+              child: Container(
+                padding: const EdgeInsets.all(8),
+                margin: const EdgeInsets.only(left: 5),
+                decoration: BoxDecoration(
+                  color: Colors.blue,
+                  shape: BoxShape.rectangle,
+                  border: Border.all(width: 1.0, color: Colors.blue),
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(10),
+                  ),
+                ),
+                height: 40,
+                width: 150,
+                child: const Center(
+                  child: Text(
+                    "All Graph example",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.white),
+                  ),
+                ),
+              ),
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => AllGraphScreen(),
+                  ),
+                );
+              },
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+
+            /*GestureDetector(
+              child: Container(
+                padding: const EdgeInsets.all(8),
+                margin: const EdgeInsets.only(left: 5),
+                decoration: BoxDecoration(
+                  color: Colors.blue,
+                  shape: BoxShape.rectangle,
+                  border: Border.all(width: 1.0, color: Colors.blue),
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(10),
+                  ),
+                ),
+                height: 40,
+                width: 150,
+                child: const Center(
+                  child: Text(
+                    "Graph View",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.white),
+                  ),
+                ),
+              ),
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => LogPeriodsScreen(),
+                  ),
+                );
+              },
+            )*/
           ],
         ),
       ), // This trailing comma makes auto-formatting nicer for build methods.
