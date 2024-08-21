@@ -200,7 +200,64 @@ class AllGraphScreen extends StatelessWidget {
                       graphView: SizedBox(
                         height: 270,
                         width: MediaQuery.of(context).size.width,
-                        child: MenstrualCycleWaterGraph(waterUnits: WaterUnits.liters,
+                        child: MenstrualCycleWaterGraph(
+                          waterUnits: WaterUnits.liters,
+                          isShowMoreOptions: true,
+                          onDownloadPdfPath: (file) async {
+                            pdfView(context: context, file: file!);
+                          },
+                          onDownloadImagePath: (file) async {
+                            imageView(context: context, file: file!);
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            GestureDetector(
+              child: textView("Sleep graph"),
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => GraphView(
+                      title: "Sleep  graph",
+                      graphView: SizedBox(
+                        height: 300,
+                        width: MediaQuery.of(context).size.width,
+                        child: MenstrualSleepGraph(
+                          isShowMoreOptions: true,
+                          onDownloadPdfPath: (file) async {
+                            pdfView(context: context, file: file!);
+                          },
+                          onDownloadImagePath: (file) async {
+                            imageView(context: context, file: file!);
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            GestureDetector(
+              child: textView("Weight log graph"),
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => GraphView(
+                      title: "Weight log graph",
+                      graphView: SizedBox(
+                        height: 300,
+                        width: MediaQuery.of(context).size.width,
+                        child: MenstrualWeightGraph(
                           isShowMoreOptions: true,
                           onDownloadPdfPath: (file) async {
                             pdfView(context: context, file: file!);

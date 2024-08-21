@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:menstrual_cycle_widget/menstrual_cycle_widget.dart';
 import 'package:menstrual_cycle_widget/ui/menstrual_log_period_view.dart';
+import 'package:menstrual_cycle_widget/ui/model/display_symptoms_data.dart';
 
 class LogPeriodsScreen extends StatefulWidget {
   @override
@@ -119,7 +120,7 @@ class _LogPeriodsScreenState extends State<LogPeriodsScreen> {
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) => MenstrualLogPeriodView(
-                isRequiredBodyTemperatureView: false,
+                displaySymptomsData: DisplaySymptomsData(),
                 onError: onError(),
                 onSuccess: (int id) {
                   onSuccess();
