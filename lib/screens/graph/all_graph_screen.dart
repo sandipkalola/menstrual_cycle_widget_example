@@ -272,6 +272,34 @@ class AllGraphScreen extends StatelessWidget {
                 );
               },
             ),
+            const SizedBox(
+              height: 10,
+            ),
+            GestureDetector(
+              child: textView("Meditation graph"),
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => GraphView(
+                      title: "Meditation graph",
+                      graphView: SizedBox(
+                        height: 300,
+                        width: MediaQuery.of(context).size.width,
+                        child: MenstrualCycleMeditationGraph(
+                          isShowMoreOptions: true,
+                          onDownloadPdfPath: (file) async {
+                            pdfView(context: context, file: file!);
+                          },
+                          onDownloadImagePath: (file) async {
+                            imageView(context: context, file: file!);
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
           ],
         ),
       ), // This trailing comma makes auto-formatting nicer for build methods.
