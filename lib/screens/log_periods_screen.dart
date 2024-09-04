@@ -107,6 +107,35 @@ class _LogPeriodsScreenState extends State<LogPeriodsScreen> {
                     "Notes  : ${userSymptomsLogData[index].notes} ",
                     style: const TextStyle(fontWeight: FontWeight.normal),
                   ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      GestureDetector(
+                        onTap: () async {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => MenstrualLogPeriodView(
+                                  displaySymptomsData: DisplaySymptomsData(),
+                                  onError: onError(),
+                                  onSuccess: (int id) {
+                                    onSuccess();
+                                  },
+                                  symptomsLogDate:
+                                      userSymptomsLogData[index].logDate!),
+                            ),
+                          );
+                        },
+                        child: getButton("Edit"),
+                      ),
+                      GestureDetector(
+                        onTap: () async {},
+                        child: getButton("Delete"),
+                      ),
+                    ],
+                  )
                 ],
               ),
             ),
@@ -132,6 +161,28 @@ class _LogPeriodsScreenState extends State<LogPeriodsScreen> {
           );
         },
         child: const Icon(Icons.add),
+      ),
+    );
+  }
+
+  Widget getButton(title) {
+    return Container(
+      margin: const EdgeInsets.only(left: 5),
+      decoration: BoxDecoration(
+        shape: BoxShape.rectangle,
+        border: Border.all(width: 1.0, color: Colors.black),
+        borderRadius: const BorderRadius.all(
+          Radius.circular(10),
+        ),
+      ),
+      height: 30,
+      width: 100,
+      child: Center(
+        child: Text(
+          title,
+          style:
+              const TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+        ),
       ),
     );
   }

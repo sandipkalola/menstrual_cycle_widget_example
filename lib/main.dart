@@ -48,7 +48,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     instance.updateConfiguration(
-        cycleLength: 31, periodDuration: 5, customerId: "1");
+        cycleLength: 31, periodDuration: 5, customerId: "1", defaultLanguage: Languages.english);
   }
 
   Widget getWidget({Widget? displayWidget, String? title}) {
