@@ -5,6 +5,7 @@ import 'package:menstrual_cycle_widget_example/display_widget.dart';
 import 'custom_functions.dart';
 import 'screens/graph/all_graph_screen.dart';
 import 'screens/log_periods_screen.dart';
+import 'screens/menstrual_cycle_view/menstrual_cycle_view_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: ' View'),
+      home: const MyHomePage(title: 'Example'),
     );
   }
 }
@@ -48,7 +49,10 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     instance.updateConfiguration(
-        cycleLength: 31, periodDuration: 5, customerId: "1", defaultLanguage: Languages.english);
+        cycleLength: 31,
+        periodDuration: 5,
+        customerId: "1",
+        defaultLanguage: Languages.english);
   }
 
   Widget getWidget({Widget? displayWidget, String? title}) {
@@ -123,7 +127,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 title: "Calender View"),
             // Menstrual Cycle Phase View
-            getWidget(
+            /* getWidget(
                 displayWidget: const Padding(
                   padding: EdgeInsets.all(8.0),
                   child: Center(
@@ -140,7 +144,40 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ),
                 ),
-                title: "Menstrual Cycle Phase View"),
+                title: "Menstrual Cycle Phase View"),*/
+            GestureDetector(
+              child: Container(
+                padding: const EdgeInsets.all(8),
+                margin: const EdgeInsets.only(left: 5),
+                decoration: BoxDecoration(
+                  color: Colors.blue,
+                  shape: BoxShape.rectangle,
+                  border: Border.all(width: 1.0, color: Colors.blue),
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(10),
+                  ),
+                ),
+                height: 40,
+                width: 230,
+                child: const Center(
+                  child: Text(
+                    "Menstrual Cycle Phase View",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.white),
+                  ),
+                ),
+              ),
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const MenstrualCycleViewScreen(),
+                  ),
+                );
+              },
+            ),
+            const SizedBox(
+              height: 10,
+            ),
             GestureDetector(
               child: Container(
                 padding: const EdgeInsets.all(8),

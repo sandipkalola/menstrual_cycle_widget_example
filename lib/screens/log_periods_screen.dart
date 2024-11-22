@@ -16,7 +16,7 @@ class _LogPeriodsScreenState extends State<LogPeriodsScreen> {
   final _random = Random();
 
   onSuccess() {
-    printLogs("onSuccess");
+    printMenstrualCycleLogs("onSuccess");
     init();
   }
 
@@ -25,7 +25,7 @@ class _LogPeriodsScreenState extends State<LogPeriodsScreen> {
   }
 
   onError() {
-    printLogs("onError");
+    printMenstrualCycleLogs("onError");
   }
 
   @override
@@ -118,8 +118,12 @@ class _LogPeriodsScreenState extends State<LogPeriodsScreen> {
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (context) => MenstrualLogPeriodView(
-                                  displaySymptomsData: DisplaySymptomsData(),
-                                  onError: onError(),
+                                  displaySymptomsData: DisplaySymptomsData(isRequiredFeelings: false),
+                                  customSymptomsList: [SymptomsCategory(categoryId: 1, categoryName: "Custom", symptomsData: [SymptomsData(symptomId: 1, isSelected: false, symptomName: "Sim 1"), SymptomsData(symptomId: 1, isSelected: false, symptomName: "Sim 2"), SymptomsData(symptomId: 1, isSelected: false, symptomName: "Sim 3")]), SymptomsCategory(categoryId: 1, categoryName: "Custom 1", symptomsData: [SymptomsData(symptomId: 1, isSelected: false, symptomName: "Sim 1.1"), SymptomsData(symptomId: 1, isSelected: false, symptomName: "Sim 2.1"), SymptomsData(symptomId: 1, isSelected: false, symptomName: "Sim 3.1")])],
+                                  onError: (){
+
+                                  },
+                                  isShowCustomSymptomsOnly: true,
                                   onSuccess: (int id) {
                                     onSuccess();
                                   },

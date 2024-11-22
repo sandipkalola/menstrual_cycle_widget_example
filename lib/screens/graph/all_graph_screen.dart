@@ -94,10 +94,10 @@ class AllGraphScreen extends StatelessWidget {
                         child: Card(
                           child: MenstrualCycleTrendsGraph(
                             isShowMoreOptions: true,
-                            onDownloadPdfPath: (file) async {
+                            onPdfDownloadCallback: (file) async {
                               pdfView(context: context, file: file!);
                             },
-                            onDownloadImagePath: (file) async {
+                            onImageDownloadCallback: (file) async {
                               imageView(context: context, file: file!);
                             },
                           ),
@@ -124,10 +124,10 @@ class AllGraphScreen extends StatelessWidget {
                         child: Card(
                           child: MenstrualCyclePeriodsGraph(
                             isShowMoreOptions: true,
-                            onDownloadPdfPath: (file) async {
+                            onPdfDownloadCallback: (file) async {
                               pdfView(context: context, file: file!);
                             },
-                            onDownloadImagePath: (file) async {
+                            onImageDownloadCallback: (file) async {
                               imageView(context: context, file: file!);
                             },
                           ),
@@ -174,10 +174,10 @@ class AllGraphScreen extends StatelessWidget {
                         child: MenstrualBodyTemperatureGraph(
                           bodyTemperatureUnits: BodyTemperatureUnits.celsius,
                           isShowMoreOptions: true,
-                          onDownloadPdfPath: (file) async {
+                          onPdfDownloadCallback: (file) async {
                             pdfView(context: context, file: file!);
                           },
-                          onDownloadImagePath: (file) async {
+                          onImageDownloadCallback: (file) async {
                             imageView(context: context, file: file!);
                           },
                         ),
@@ -203,10 +203,10 @@ class AllGraphScreen extends StatelessWidget {
                         child: MenstrualCycleWaterGraph(
                           waterUnits: WaterUnits.liters,
                           isShowMoreOptions: true,
-                          onDownloadPdfPath: (file) async {
+                          onPdfDownloadCallback: (file) async {
                             pdfView(context: context, file: file!);
                           },
-                          onDownloadImagePath: (file) async {
+                          onImageDownloadCallback: (file) async {
                             imageView(context: context, file: file!);
                           },
                         ),
@@ -230,11 +230,12 @@ class AllGraphScreen extends StatelessWidget {
                         height: 300,
                         width: MediaQuery.of(context).size.width,
                         child: MenstrualSleepGraph(
+                          isShowYAxisGridLine: true,
                           isShowMoreOptions: true,
-                          onDownloadPdfPath: (file) async {
+                          onPdfDownloadCallback: (file) async {
                             pdfView(context: context, file: file!);
                           },
-                          onDownloadImagePath: (file) async {
+                          onImageDownloadCallback: (file) async {
                             imageView(context: context, file: file!);
                           },
                         ),
@@ -258,11 +259,12 @@ class AllGraphScreen extends StatelessWidget {
                         height: 300,
                         width: MediaQuery.of(context).size.width,
                         child: MenstrualWeightGraph(
+                          weightUnits: WeightUnits.kg,
                           isShowMoreOptions: true,
-                          onDownloadPdfPath: (file) async {
+                          onPdfDownloadCallback: (file) async {
                             pdfView(context: context, file: file!);
                           },
-                          onDownloadImagePath: (file) async {
+                          onImageDownloadCallback: (file) async {
                             imageView(context: context, file: file!);
                           },
                         ),
@@ -285,12 +287,12 @@ class AllGraphScreen extends StatelessWidget {
                       graphView: SizedBox(
                         height: 300,
                         width: MediaQuery.of(context).size.width,
-                        child: MenstrualCycleMeditationGraph(
+                        child: MenstrualMeditationGraph(
                           isShowMoreOptions: true,
-                          onDownloadPdfPath: (file) async {
+                          onPdfDownloadCallback: (file) async {
                             pdfView(context: context, file: file!);
                           },
-                          onDownloadImagePath: (file) async {
+                          onImageDownloadCallback: (file) async {
                             imageView(context: context, file: file!);
                           },
                         ),

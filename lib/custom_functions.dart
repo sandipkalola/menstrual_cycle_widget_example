@@ -68,6 +68,11 @@ class _CustomFunctionsState extends State<CustomFunctions> {
             GestureDetector(
               onTap: () async {
                 lastPeriodDate = await instance.getPreviousPeriodDate();
+                if (lastPeriodDate!.year == 1971) {
+                  print("No last period date was provided. Returning default date: 1971-01-01.");
+                } else {
+                  print("Last period date is: ${lastPeriodDate!.toLocal()}");
+                }
                 setState(() {});
               },
               child: getButton("Get Previous Period Day"),

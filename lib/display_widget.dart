@@ -18,7 +18,7 @@ class _DisplayWidgetState extends State<DisplayWidget> {
       appBar: AppBar(
         title: Text(widget.title!),
       ),
-      body: widget.displayWidget,
+      body: Center(child: widget.displayWidget),
     );
   }
 }
