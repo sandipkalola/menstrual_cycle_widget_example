@@ -2,9 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:menstrual_cycle_widget/menstrual_cycle_widget.dart';
-import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
-
 import 'graph_view.dart';
+import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 class AllGraphScreen extends StatelessWidget {
   const AllGraphScreen({super.key});
@@ -38,7 +37,7 @@ class AllGraphScreen extends StatelessWidget {
             appBar: AppBar(
               title: const Text("View PDF"),
             ),
-            body: SfPdfViewer.file(file!),
+            body:  SfPdfViewer.file(file!),
           );
         },
       ),
