@@ -1,8 +1,10 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:menstrual_cycle_widget/menstrual_cycle_widget.dart';
 
 import 'screens/period_range_list.dart';
+import 'util/custom_widgets.dart';
 
 class CustomFunctions extends StatefulWidget {
   const CustomFunctions({super.key});
@@ -32,14 +34,7 @@ class _CustomFunctionsState extends State<CustomFunctions> {
     return Container(
       padding: const EdgeInsets.all(8),
       margin: const EdgeInsets.only(left: 5),
-      decoration: BoxDecoration(
-        color: Colors.black,
-        shape: BoxShape.rectangle,
-        border: Border.all(width: 1.0, color: Colors.black),
-        borderRadius: const BorderRadius.all(
-          Radius.circular(10),
-        ),
-      ),
+      decoration: getBoxDecoration(),
       height: 40,
       child: Center(
         child: Text(
@@ -54,9 +49,7 @@ class _CustomFunctionsState extends State<CustomFunctions> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Custom Functions"),
-      ),
+      appBar: getAppBar("Custom Functions"),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
@@ -67,11 +60,18 @@ class _CustomFunctionsState extends State<CustomFunctions> {
                 "Previous Period Date: ${(lastPeriodDate == null) ? "N/A" : _dateFormat.format(lastPeriodDate!)}"),
             GestureDetector(
               onTap: () async {
+                printMenstrualCycleLogs(
+                    "Json Data ${await instance.getMenstrualCycleSummary()}");
                 lastPeriodDate = await instance.getPreviousPeriodDate();
                 if (lastPeriodDate!.year == 1971) {
-                  print("No last period date was provided. Returning default date: 1971-01-01.");
+                  if (kDebugMode) {
+                    print(
+                        "No last period date was provided. Returning default date: 1971-01-01.");
+                  }
                 } else {
-                  print("Last period date is: ${lastPeriodDate!.toLocal()}");
+                  if (kDebugMode) {
+                    print("Last period date is: ${lastPeriodDate!.toLocal()}");
+                  }
                 }
                 setState(() {});
               },
@@ -116,7 +116,8 @@ class _CustomFunctionsState extends State<CustomFunctions> {
             Text("Previous Cycle Length: $previousCycleLength"),
             GestureDetector(
               onTap: () async {
-                int lastPeriodDuration = instance.getPreviousCycleLength();
+                int lastPeriodDuration =
+                    await instance.getPreviousCycleLength();
                 previousCycleLength = lastPeriodDuration;
                 setState(() {});
               },
@@ -154,8 +155,8 @@ class _CustomFunctionsState extends State<CustomFunctions> {
                 "Avg Period Duration: ${(avgPeriodDuration == null) ? "N/A" : avgPeriodDuration}"),
             GestureDetector(
               onTap: () async {
-                int periodDateRange = await instance.getAvgPeriodDuration();
-                avgPeriodDuration = "$periodDateRange";
+                int periodDateDuration = await instance.getAvgPeriodDuration();
+                avgPeriodDuration = "$periodDateDuration";
                 setState(() {});
               },
               child: getButton("Get Avg Period Duration"),

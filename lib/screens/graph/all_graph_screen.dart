@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:menstrual_cycle_widget/menstrual_cycle_widget.dart';
+import 'package:menstrual_cycle_widget_example/util/custom_widgets.dart';
 import 'graph_view.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
@@ -37,29 +38,9 @@ class AllGraphScreen extends StatelessWidget {
             appBar: AppBar(
               title: const Text("View PDF"),
             ),
-            body:  SfPdfViewer.file(file!),
+            body: SfPdfViewer.file(file!),
           );
         },
-      ),
-    );
-  }
-
-  Widget textView(String title) {
-    return Container(
-      padding: const EdgeInsets.all(8),
-      margin: const EdgeInsets.only(left: 5),
-      decoration: BoxDecoration(
-        color: Colors.blue,
-        shape: BoxShape.rectangle,
-        border: Border.all(width: 1.0, color: Colors.blue),
-        borderRadius: const BorderRadius.all(
-          Radius.circular(10),
-        ),
-      ),
-      child: Text(
-        title,
-        style:
-            const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
       ),
     );
   }
@@ -67,13 +48,7 @@ class AllGraphScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.blueAccent,
-        title: const Text(
-          "All graph examples",
-          style: TextStyle(fontSize: 20),
-        ),
-      ),
+      appBar: getAppBar("All graph examples"),
       body: Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,

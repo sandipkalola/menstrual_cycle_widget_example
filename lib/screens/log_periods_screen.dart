@@ -5,6 +5,9 @@ import 'package:menstrual_cycle_widget/menstrual_cycle_widget.dart';
 import 'package:menstrual_cycle_widget/ui/menstrual_log_period_view.dart';
 import 'package:menstrual_cycle_widget/ui/model/display_symptoms_data.dart';
 
+import '../util/colors.dart';
+import '../util/custom_widgets.dart';
+
 class LogPeriodsScreen extends StatefulWidget {
   @override
   State<LogPeriodsScreen> createState() => _LogPeriodsScreenState();
@@ -44,9 +47,7 @@ class _LogPeriodsScreenState extends State<LogPeriodsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Log Periods"),
-      ),
+      appBar: getAppBar("Log Periods"),
       body: ListView.builder(
         shrinkWrap: true,
         physics: const ClampingScrollPhysics(),
@@ -84,6 +85,10 @@ class _LogPeriodsScreenState extends State<LogPeriodsScreen> {
                     ).toList(),
                   ),
                   Text(
+                    "Cycle Day : ${userSymptomsLogData[index].cycleDay} ",
+                    style: const TextStyle(fontWeight: FontWeight.normal),
+                  ),
+                  Text(
                     "Body Temperature  : ${userSymptomsLogData[index].bodyTemperature}  ${userSymptomsLogData[index].bodyTemperatureUnit}",
                     style: const TextStyle(fontWeight: FontWeight.normal),
                   ),
@@ -118,12 +123,9 @@ class _LogPeriodsScreenState extends State<LogPeriodsScreen> {
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (context) => MenstrualLogPeriodView(
-                                  displaySymptomsData: DisplaySymptomsData(isRequiredFeelings: false),
-                                  customSymptomsList: [SymptomsCategory(categoryId: 1, categoryName: "Custom", symptomsData: [SymptomsData(symptomId: 1, isSelected: false, symptomName: "Sim 1"), SymptomsData(symptomId: 1, isSelected: false, symptomName: "Sim 2"), SymptomsData(symptomId: 1, isSelected: false, symptomName: "Sim 3")]), SymptomsCategory(categoryId: 1, categoryName: "Custom 1", symptomsData: [SymptomsData(symptomId: 1, isSelected: false, symptomName: "Sim 1.1"), SymptomsData(symptomId: 1, isSelected: false, symptomName: "Sim 2.1"), SymptomsData(symptomId: 1, isSelected: false, symptomName: "Sim 3.1")])],
-                                  onError: (){
-
-                                  },
-                                  isShowCustomSymptomsOnly: true,
+                                  displaySymptomsData: DisplaySymptomsData(),
+                                  onError: () {},
+                                  isShowCustomSymptomsOnly: false,
                                   onSuccess: (int id) {
                                     onSuccess();
                                   },
@@ -147,7 +149,7 @@ class _LogPeriodsScreenState extends State<LogPeriodsScreen> {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: const Color(0xff03dac6),
+        backgroundColor: themeColor,
         foregroundColor: Colors.black,
         onPressed: () {
           Navigator.of(context).push(
@@ -155,11 +157,47 @@ class _LogPeriodsScreenState extends State<LogPeriodsScreen> {
               builder: (context) => MenstrualLogPeriodView(
                 displaySymptomsData: DisplaySymptomsData(),
                 onError: onError(),
+                customSymptomsList: [
+                  SymptomsCategory(
+                      categoryId: 2,
+                      categoryName: "Custom",
+                      symptomsData: [
+                        SymptomsData(
+                            symptomId: 1,
+                            isSelected: false,
+                            symptomName: "Sim 1"),
+                        SymptomsData(
+                            symptomId: 2,
+                            isSelected: false,
+                            symptomName: "Sim 2"),
+                        SymptomsData(
+                            symptomId: 3,
+                            isSelected: false,
+                            symptomName: "Sim 3")
+                      ]),
+                  SymptomsCategory(
+                      categoryId: 1,
+                      categoryName: "Custom 1",
+                      symptomsData: [
+                        SymptomsData(
+                            symptomId: 4,
+                            isSelected: false,
+                            symptomName: "Sim 1.1"),
+                        SymptomsData(
+                            symptomId: 5,
+                            isSelected: false,
+                            symptomName: "Sim 2.1"),
+                        SymptomsData(
+                            symptomId: 6,
+                            isSelected: false,
+                            symptomName: "Sim 3.1")
+                      ])
+                ],
                 onSuccess: (int id) {
                   onSuccess();
                 },
-                symptomsLogDate:
-                    DateTime.now().add(Duration(days: next(1, 500))),
+                symptomsLogDate: DateTime.now(),
+                themeColor: themeColor,
               ),
             ),
           );

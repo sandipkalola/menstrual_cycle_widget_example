@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'util/custom_widgets.dart';
+
 class DisplayWidget extends StatefulWidget {
   final Widget? displayWidget;
   final String? title;
@@ -15,9 +17,7 @@ class _DisplayWidgetState extends State<DisplayWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title!),
-      ),
+      appBar: getAppBar(widget.title!),
       body: Center(child: widget.displayWidget),
     );
   }

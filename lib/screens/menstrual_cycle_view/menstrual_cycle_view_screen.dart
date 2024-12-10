@@ -1,42 +1,16 @@
-
 import 'package:flutter/material.dart';
 import 'package:menstrual_cycle_widget/menstrual_cycle_widget.dart';
 
 import '../../display_widget.dart';
+import '../../util/custom_widgets.dart';
 
 class MenstrualCycleViewScreen extends StatelessWidget {
   const MenstrualCycleViewScreen({super.key});
 
-  Widget textView(String title) {
-    return Container(
-      padding: const EdgeInsets.all(8),
-      margin: const EdgeInsets.only(left: 5),
-      decoration: BoxDecoration(
-        color: Colors.blue,
-        shape: BoxShape.rectangle,
-        border: Border.all(width: 1.0, color: Colors.blue),
-        borderRadius: const BorderRadius.all(
-          Radius.circular(10),
-        ),
-      ),
-      child: Text(
-        title,
-        style:
-            const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.blueAccent,
-        title: const Text(
-          "Menstrual Cycle example",
-          style: TextStyle(fontSize: 20),
-        ),
-      ),
+      appBar: getAppBar("Menstrual Cycle example"),
       body: Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,

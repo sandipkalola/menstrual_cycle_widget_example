@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:menstrual_cycle_widget/menstrual_cycle_widget.dart';
+import 'package:menstrual_cycle_widget_example/util/custom_widgets.dart';
 
 class PeriodRangeList extends StatefulWidget {
   List<PeriodsDateRange>? periodDateRange;
@@ -14,9 +15,7 @@ class _PeriodRangeListState extends State<PeriodRangeList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Period Range"),
-      ),
+      appBar: getAppBar("Period Range"),
       body: ListView.builder(
         itemCount: widget.periodDateRange!.length,
         itemBuilder: (context, index) {
@@ -40,7 +39,7 @@ class _PeriodRangeListState extends State<PeriodRangeList> {
                   Text(
                       "Period Duration: ${widget.periodDateRange![index].periodDuration}"),
                   Text(
-                      "Cycle Duration: ${widget.periodDateRange![index].cycleDuration}"),
+                      "Cycle Duration: ${widget.periodDateRange![index].cycleLength}"),
                   Text(
                       "Period Range: ${widget.periodDateRange![index].allPeriodDates.toString()}"),
                 ],

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../util/custom_widgets.dart';
+
 class GraphView extends StatelessWidget {
   final String title;
   Widget graphView;
@@ -9,13 +11,7 @@ class GraphView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.blueAccent,
-        title: Text(
-          title,
-          style: const TextStyle(fontSize: 20),
-        ),
-      ),
+      appBar: getAppBar(title),
       body: graphView,
     );
   }
