@@ -1,10 +1,13 @@
+import 'dart:math';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:menstrual_cycle_widget/menstrual_cycle_widget.dart';
 
-import 'screens/period_range_list.dart';
-import 'util/custom_widgets.dart';
+import 'period_range_list.dart';
+import '../util/custom_widgets.dart';
 
 class CustomFunctions extends StatefulWidget {
   const CustomFunctions({super.key});
@@ -56,6 +59,32 @@ class _CustomFunctionsState extends State<CustomFunctions> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            GestureDetector(
+              onTap: () async {
+                Fluttertoast.showToast(
+                  msg: "Adding dummy data. please wait",
+                  toastLength: Toast.LENGTH_SHORT,
+                );
+                instance.addDummyData(
+                    onSuccess: () {
+                      Fluttertoast.showToast(
+                        msg: "Successfully added dummy data",
+                        toastLength: Toast.LENGTH_LONG,
+                      );
+                    },
+                    onError: () {
+                      Fluttertoast.showToast(
+                        msg: "Error while adding dummy data",
+                        toastLength: Toast.LENGTH_LONG,
+                      );
+                    },
+                    numberOfDay: 200);
+              },
+              child: getButton("Add Dummy Data"),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
             Text(
                 "Previous Period Date: ${(lastPeriodDate == null) ? "N/A" : _dateFormat.format(lastPeriodDate!)}"),
             GestureDetector(

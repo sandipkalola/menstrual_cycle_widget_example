@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:menstrual_cycle_widget/menstrual_cycle_widget.dart';
 import 'package:menstrual_cycle_widget_example/display_widget.dart';
+import 'package:menstrual_cycle_widget_example/screens/custom_error_view.dart';
 import 'package:menstrual_cycle_widget_example/util/colors.dart';
 import 'package:menstrual_cycle_widget_example/util/links.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'custom_functions.dart';
+import 'screens/custom_functions.dart';
 import 'screens/graph/all_graph_screen.dart';
 import 'screens/log_periods_screen.dart';
 import 'screens/menstrual_cycle_view/menstrual_cycle_view_screen.dart';
+import 'screens/summary_view.dart';
 import 'util/custom_widgets.dart';
 
 String menstrualCycleDuration = "28";
@@ -20,6 +22,12 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   MenstrualCycleWidget.init(
       secretKey: "11a1215l0119a140409p0919", ivKey: "23a1dfr5lyhd9a1404845001");
+
+ /* FlutterError.onError = (FlutterErrorDetails details) {
+    FlutterError.dumpErrorToConsole(details);
+    runApp(CustomErrorView(details));
+  };*/
+
   runApp(const MyApp());
 }
 
@@ -98,31 +106,6 @@ class _MyHomePageState extends State<MyHomePage> {
     )) {
       throw Exception('Could not launch $url');
     }
-  }
-
-  Widget getWidget({Widget? displayWidget, String? title}) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) =>
-                DisplayWidget(displayWidget: displayWidget, title: title),
-          ),
-        );
-      },
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Container(
-          padding: const EdgeInsets.all(8),
-          decoration: getBoxDecoration(),
-          child: Text(
-            title!,
-            style: const TextStyle(
-                fontWeight: FontWeight.bold, color: Colors.white),
-          ),
-        ),
-      ),
-    );
   }
 
   @override
@@ -343,31 +326,68 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             // Monthly Calender View
-            getWidget(
-                displayWidget: MenstrualCycleMonthlyCalenderView(
-                  themeColor: Colors.black,
-                  daySelectedColor: Colors.blue,
-                  hideInfoView: false,
-                  onDataChanged: (value) {},
-                ),
-                title: "Monthly Calender View"),
-            //Calender View
-            getWidget(
-                displayWidget: Center(
-                  child: MenstrualCycleCalenderView(
-                    themeColor: Colors.black,
-                    daySelectedColor: Colors.blue,
-                    logPeriodText: "Log Period",
-                    backgroundColorCode: Colors.white,
-                    hideInfoView: false,
-                    onDateSelected: (date) {},
-                    onDataChanged: (value) {},
-                    hideBottomBar: false,
-                    hideLogPeriodButton: false,
-                    isExpanded: false,
+            GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => DisplayWidget(
+                        displayWidget: MenstrualCycleMonthlyCalenderView(
+                          themeColor: Colors.black,
+                          daySelectedColor: Colors.blue,
+                          hideInfoView: false,
+                          onDataChanged: (value) {},
+                        ),
+                        title: "Monthly Calender View"),
+                  ),
+                );
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: getBoxDecoration(),
+                  child: const Text(
+                    "Monthly Calender View",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.white),
                   ),
                 ),
-                title: "Calender View"),
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => DisplayWidget(
+                        displayWidget: MenstrualCycleCalenderView(
+                          themeColor: Colors.black,
+                          daySelectedColor: Colors.blue,
+                          logPeriodText: "Log Period",
+                          backgroundColorCode: Colors.white,
+                          hideInfoView: false,
+                          onDateSelected: (date) {},
+                          onDataChanged: (value) {},
+                          hideBottomBar: false,
+                          hideLogPeriodButton: false,
+                          isExpanded: false,
+                        ),
+                        title: "Calender View"),
+                  ),
+                );
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: getBoxDecoration(),
+                  child: const Text(
+                    "Calender View",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.white),
+                  ),
+                ),
+              ),
+            ),
             GestureDetector(
               child: Container(
                 padding: const EdgeInsets.all(8),
@@ -387,6 +407,32 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) => const MenstrualCycleViewScreen(),
+                  ),
+                );
+              },
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            GestureDetector(
+              child: Container(
+                padding: const EdgeInsets.all(8),
+                margin: const EdgeInsets.only(left: 5),
+                decoration: getBoxDecoration(),
+                height: 40,
+                width: 150,
+                child: const Center(
+                  child: Text(
+                    "Get Full Summary",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.white),
+                  ),
+                ),
+              ),
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const SummaryView(),
                   ),
                 );
               },

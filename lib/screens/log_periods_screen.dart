@@ -136,10 +136,12 @@ class _LogPeriodsScreenState extends State<LogPeriodsScreen> {
                         },
                         child: getButton("Edit"),
                       ),
-                      GestureDetector(
-                        onTap: () async {},
+                      /*GestureDetector(
+                        onTap: () async {
+
+                        },
                         child: getButton("Delete"),
-                      ),
+                      ),*/
                     ],
                   )
                 ],
@@ -157,42 +159,6 @@ class _LogPeriodsScreenState extends State<LogPeriodsScreen> {
               builder: (context) => MenstrualLogPeriodView(
                 displaySymptomsData: DisplaySymptomsData(),
                 onError: onError(),
-                customSymptomsList: [
-                  SymptomsCategory(
-                      categoryId: 2,
-                      categoryName: "Custom",
-                      symptomsData: [
-                        SymptomsData(
-                            symptomId: 1,
-                            isSelected: false,
-                            symptomName: "Sim 1"),
-                        SymptomsData(
-                            symptomId: 2,
-                            isSelected: false,
-                            symptomName: "Sim 2"),
-                        SymptomsData(
-                            symptomId: 3,
-                            isSelected: false,
-                            symptomName: "Sim 3")
-                      ]),
-                  SymptomsCategory(
-                      categoryId: 1,
-                      categoryName: "Custom 1",
-                      symptomsData: [
-                        SymptomsData(
-                            symptomId: 4,
-                            isSelected: false,
-                            symptomName: "Sim 1.1"),
-                        SymptomsData(
-                            symptomId: 5,
-                            isSelected: false,
-                            symptomName: "Sim 2.1"),
-                        SymptomsData(
-                            symptomId: 6,
-                            isSelected: false,
-                            symptomName: "Sim 3.1")
-                      ])
-                ],
                 onSuccess: (int id) {
                   onSuccess();
                 },
