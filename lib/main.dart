@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:menstrual_cycle_widget/menstrual_cycle_widget.dart';
 import 'package:menstrual_cycle_widget_example/display_widget.dart';
-import 'package:menstrual_cycle_widget_example/screens/custom_error_view.dart';
 import 'package:menstrual_cycle_widget_example/util/colors.dart';
 import 'package:menstrual_cycle_widget_example/util/links.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -23,7 +22,7 @@ void main() {
   MenstrualCycleWidget.init(
       secretKey: "11a1215l0119a140409p0919", ivKey: "23a1dfr5lyhd9a1404845001");
 
- /* FlutterError.onError = (FlutterErrorDetails details) {
+  /* FlutterError.onError = (FlutterErrorDetails details) {
     FlutterError.dumpErrorToConsole(details);
     runApp(CustomErrorView(details));
   };*/

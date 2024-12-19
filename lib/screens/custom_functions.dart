@@ -27,6 +27,7 @@ class _CustomFunctionsState extends State<CustomFunctions> {
   String? periodDateRangeString;
   int previousCycleLength = 0;
   String? avgPeriodDuration;
+  bool isAddingData = false;
 
   @override
   void initState() {
@@ -61,24 +62,35 @@ class _CustomFunctionsState extends State<CustomFunctions> {
           children: [
             GestureDetector(
               onTap: () async {
-                Fluttertoast.showToast(
-                  msg: "Adding dummy data. please wait",
-                  toastLength: Toast.LENGTH_SHORT,
-                );
-                instance.addDummyData(
+                if (!isAddingData) {
+                  Fluttertoast.showToast(
+                    msg: "Adding dummy data. please wait",
+                    toastLength: Toast.LENGTH_SHORT,
+                  );
+                  instance.addDummyData(
                     onSuccess: () {
                       Fluttertoast.showToast(
                         msg: "Successfully added dummy data",
                         toastLength: Toast.LENGTH_LONG,
                       );
+                      setState(() {
+                        isAddingData = false;
+                      });
                     },
                     onError: () {
                       Fluttertoast.showToast(
                         msg: "Error while adding dummy data",
                         toastLength: Toast.LENGTH_LONG,
                       );
+                      setState(() {
+                        isAddingData = false;
+                      });
                     },
-                    numberOfDay: 200);
+                  );
+                }
+                setState(() {
+                  isAddingData = true;
+                });
               },
               child: getButton("Add Dummy Data"),
             ),

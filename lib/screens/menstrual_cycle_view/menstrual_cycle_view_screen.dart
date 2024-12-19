@@ -26,9 +26,7 @@ class MenstrualCycleViewScreen extends StatelessWidget {
                         displayWidget: MenstrualCyclePhaseView(
                           size: 300,
                           theme: MenstrualCycleTheme.basic,
-                          phaseTextBoundaries: PhaseTextBoundaries.outside,
                           isRemoveBackgroundPhaseColor: false,
-                          viewType: MenstrualCycleViewType.text,
                           spaceBtnTitleMessage: 5,
                           centralCircleSize: 100,
                           centralCircleBackgroundColor: Color(0xFFE1F5FE),
@@ -51,9 +49,7 @@ class MenstrualCycleViewScreen extends StatelessWidget {
                         displayWidget: MenstrualCyclePhaseView(
                           size: 300,
                           theme: MenstrualCycleTheme.circle,
-                          phaseTextBoundaries: PhaseTextBoundaries.outside,
                           isRemoveBackgroundPhaseColor: false,
-                          viewType: MenstrualCycleViewType.text,
                           spaceBtnTitleMessage: 5,
                           centralCircleSize: 100,
                           centralCircleBackgroundColor: Color(0xFFE1F5FE),
@@ -76,9 +72,6 @@ class MenstrualCycleViewScreen extends StatelessWidget {
                         displayWidget: MenstrualCyclePhaseView(
                           size: 300,
                           theme: MenstrualCycleTheme.arcs,
-                          phaseTextBoundaries: PhaseTextBoundaries.outside,
-                          isRemoveBackgroundPhaseColor: false,
-                          viewType: MenstrualCycleViewType.text,
                           spaceBtnTitleMessage: 5,
                           centralCircleSize: 100,
                           centralCircleBackgroundColor: Color(0xFFE1F5FE),
