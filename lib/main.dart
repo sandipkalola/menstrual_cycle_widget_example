@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:menstrual_cycle_widget/menstrual_cycle_widget.dart';
 import 'package:menstrual_cycle_widget_example/display_widget.dart';
 import 'package:menstrual_cycle_widget_example/util/colors.dart';
 import 'package:menstrual_cycle_widget_example/util/links.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:restart_app/restart_app.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -16,6 +18,7 @@ import 'util/custom_widgets.dart';
 
 String menstrualCycleDuration = "28";
 String periodDuration = "5";
+String appLanguage = "English";
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -61,11 +64,12 @@ class _MyHomePageState extends State<MyHomePage> {
   final instance = MenstrualCycleWidget.instance!;
   String version = "";
   SharedPreferences? prefs;
+  final List<String> widgetLanguages = ["English", "Hindi", "Arabic"];
+  bool isAddingData = false;
 
   @override
   void initState() {
     super.initState();
-    updateMenstrualData();
     init();
   }
 
@@ -74,7 +78,21 @@ class _MyHomePageState extends State<MyHomePage> {
         cycleLength: int.parse(menstrualCycleDuration),
         periodDuration: int.parse(periodDuration),
         customerId: "1",
-        defaultLanguage: Languages.english);
+        // fontFamily: 'CustomFont',
+        defaultLanguage: getLanguage());
+  }
+
+  Languages getLanguage() {
+    printMenstrualCycleLogs("appLanguage $appLanguage");
+    if (appLanguage == "English") {
+      return Languages.english;
+    } else if (appLanguage == "Hindi") {
+      return Languages.hindi;
+    } else if (appLanguage == "Arabic") {
+      return Languages.arabic;
+    }
+
+    return Languages.english;
   }
 
   init() async {
@@ -82,6 +100,13 @@ class _MyHomePageState extends State<MyHomePage> {
     final int? periodDurationInt = prefs!.getInt('periodDuration');
     final int? menstrualCycleDurationInt =
         prefs!.getInt('menstrualCycleDuration');
+    final String? _appLanguage = prefs!.getString('appLanguage');
+    printMenstrualCycleLogs("getString from pref ${_appLanguage}");
+    if (_appLanguage != null) {
+      appLanguage = _appLanguage;
+    } else {
+      appLanguage = "English";
+    }
     if (periodDurationInt != null) {
       periodDuration = "$periodDurationInt";
     } else {
@@ -95,6 +120,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     version = "Version ${packageInfo.version}";
+    updateMenstrualData();
     setState(() {});
   }
 
@@ -230,7 +256,61 @@ class _MyHomePageState extends State<MyHomePage> {
                                 ),
                               )
                             ],
-                          )
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            children: [
+                              const Text("Widget Language"),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              SizedBox(
+                                height: 30,
+                                width: 150,
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.grey),
+                                    borderRadius: BorderRadius.circular(12),
+                                    color: Colors.white, // Background color
+                                  ),
+                                  child: DropdownButton<String>(
+                                    value: appLanguage,
+                                    items: widgetLanguages.map((String value) {
+                                      return DropdownMenuItem<String>(
+                                        value: value,
+                                        child: Text(value),
+                                      );
+                                    }).toList(),
+                                    onChanged: (newValue) async {
+                                      await prefs!
+                                          .setString('appLanguage', newValue!);
+                                      setState(() {
+                                        appLanguage = newValue;
+                                      });
+                                      updateMenstrualData();
+                                    },
+                                    underline: const SizedBox(),
+                                    isExpanded: true,
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Center(
+                            child: GestureDetector(
+                              child: textView("Update and restart app"),
+                              onTap: () {
+                                Restart.restartApp();
+                              },
+                            ),
+                          ),
                         ],
                       ),
                     );
@@ -324,6 +404,69 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
+            GestureDetector(
+              onTap: () async {
+                if (!isAddingData) {
+                  Fluttertoast.showToast(
+                    msg: "Adding dummy data. please wait",
+                    toastLength: Toast.LENGTH_SHORT,
+                  );
+                  instance.addDummyData(
+                    onSuccess: () {
+                      Fluttertoast.showToast(
+                        msg: "Successfully added dummy data",
+                        toastLength: Toast.LENGTH_LONG,
+                      );
+                      setState(() {
+                        isAddingData = false;
+                      });
+                    },
+                    onError: () {
+                      Fluttertoast.showToast(
+                        msg: "Error while adding dummy data",
+                        toastLength: Toast.LENGTH_LONG,
+                      );
+                      setState(() {
+                        isAddingData = false;
+                      });
+                    },
+                  );
+                }
+                setState(() {
+                  isAddingData = true;
+                });
+              },
+              child: Container(
+                padding: const EdgeInsets.all(8),
+                margin: const EdgeInsets.only(left: 5),
+                decoration: getBoxDecoration(),
+                height: 40,
+                width: 170,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    (isAddingData)
+                        ? const SizedBox(
+                            width: 20,
+                            height: 20,
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
+                            ),
+                          )
+                        : const SizedBox(),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    const Text(
+                      "Add Dummy Data",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, color: Colors.white),
+                    ),
+                  ],
+                ),
+              ),
+            ),
             // Monthly Calender View
             GestureDetector(
               onTap: () {
@@ -361,7 +504,6 @@ class _MyHomePageState extends State<MyHomePage> {
                         displayWidget: MenstrualCycleCalenderView(
                           themeColor: Colors.black,
                           daySelectedColor: Colors.blue,
-                          logPeriodText: "Log Period",
                           backgroundColorCode: Colors.white,
                           hideInfoView: false,
                           onDateSelected: (date) {},
@@ -483,7 +625,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => LogPeriodsScreen(),
+                    builder: (context) => const LogPeriodsScreen(),
                   ),
                 );
               },

@@ -121,11 +121,11 @@ class PredictionMatrix {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
-    data['next_period_day'] = this.nextPeriodDay;
-    data['ovulation_day'] = this.ovulationDay;
-    data['is_period_start_from_today'] = this.isPeriodStartFromToday;
-    data['is_period_start_from_tomorrow'] = this.isPeriodStartFromTomorrow;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['next_period_day'] = nextPeriodDay;
+    data['ovulation_day'] = ovulationDay;
+    data['is_period_start_from_today'] = isPeriodStartFromToday;
+    data['is_period_start_from_tomorrow'] = isPeriodStartFromTomorrow;
     return data;
   }
 }

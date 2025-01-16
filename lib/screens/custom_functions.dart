@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -27,27 +25,10 @@ class _CustomFunctionsState extends State<CustomFunctions> {
   String? periodDateRangeString;
   int previousCycleLength = 0;
   String? avgPeriodDuration;
-  bool isAddingData = false;
 
   @override
   void initState() {
     super.initState();
-  }
-
-  Widget getButton(title) {
-    return Container(
-      padding: const EdgeInsets.all(8),
-      margin: const EdgeInsets.only(left: 5),
-      decoration: getBoxDecoration(),
-      height: 40,
-      child: Center(
-        child: Text(
-          title,
-          style:
-              const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
-        ),
-      ),
-    );
   }
 
   @override
@@ -60,40 +41,6 @@ class _CustomFunctionsState extends State<CustomFunctions> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            GestureDetector(
-              onTap: () async {
-                if (!isAddingData) {
-                  Fluttertoast.showToast(
-                    msg: "Adding dummy data. please wait",
-                    toastLength: Toast.LENGTH_SHORT,
-                  );
-                  instance.addDummyData(
-                    onSuccess: () {
-                      Fluttertoast.showToast(
-                        msg: "Successfully added dummy data",
-                        toastLength: Toast.LENGTH_LONG,
-                      );
-                      setState(() {
-                        isAddingData = false;
-                      });
-                    },
-                    onError: () {
-                      Fluttertoast.showToast(
-                        msg: "Error while adding dummy data",
-                        toastLength: Toast.LENGTH_LONG,
-                      );
-                      setState(() {
-                        isAddingData = false;
-                      });
-                    },
-                  );
-                }
-                setState(() {
-                  isAddingData = true;
-                });
-              },
-              child: getButton("Add Dummy Data"),
-            ),
             const SizedBox(
               height: 20,
             ),

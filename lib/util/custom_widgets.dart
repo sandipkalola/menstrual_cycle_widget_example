@@ -36,3 +36,19 @@ Widget textView(String title) {
     ),
   );
 }
+
+Widget getButton(title) {
+  return Container(
+    padding: const EdgeInsets.all(8),
+    margin: const EdgeInsets.only(left: 5),
+    decoration: getBoxDecoration(),
+    height: 40,
+    child: Center(
+      child: Text(
+        title,
+        style:
+            const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+      ),
+    ),
+  );
+}

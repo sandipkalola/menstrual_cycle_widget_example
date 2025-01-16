@@ -9,6 +9,8 @@ import '../util/colors.dart';
 import '../util/custom_widgets.dart';
 
 class LogPeriodsScreen extends StatefulWidget {
+  const LogPeriodsScreen({super.key});
+
   @override
   State<LogPeriodsScreen> createState() => _LogPeriodsScreenState();
 }

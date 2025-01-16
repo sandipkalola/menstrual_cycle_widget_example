@@ -20,6 +20,7 @@ dependencies:
   shared_preferences: ^2.3.3
   #menstrual_cycle_widget: ^2.0.2
   intl:
+  restart_app: ^1.3.2
   menstrual_cycle_widget:
     path: ../menstrual_cycle_widget
 
@@ -49,8 +50,10 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
+  fonts:
+    - family: CustomFont
+      fonts:
+        - asset: assets/fonts/MonsieurLaDoulaise-Regular.ttf
   #     fonts:
   #       - asset: fonts/Schyler-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
