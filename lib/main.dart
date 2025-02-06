@@ -14,6 +14,7 @@ import 'screens/graph/all_graph_screen.dart';
 import 'screens/log_periods_screen.dart';
 import 'screens/menstrual_cycle_view/menstrual_cycle_view_screen.dart';
 import 'screens/summary_view.dart';
+import 'screens/symptoms_pattern.dart';
 import 'util/custom_widgets.dart';
 
 String menstrualCycleDuration = "28";
@@ -101,7 +102,7 @@ class _MyHomePageState extends State<MyHomePage> {
     final int? menstrualCycleDurationInt =
         prefs!.getInt('menstrualCycleDuration');
     final String? _appLanguage = prefs!.getString('appLanguage');
-    printMenstrualCycleLogs("getString from pref ${_appLanguage}");
+    // printMenstrualCycleLogs("getString from pref ${_appLanguage}");
     if (_appLanguage != null) {
       appLanguage = _appLanguage;
     } else {
@@ -412,6 +413,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     toastLength: Toast.LENGTH_SHORT,
                   );
                   instance.addDummyData(
+                    numberOfDay: 365,
                     onSuccess: () {
                       Fluttertoast.showToast(
                         msg: "Successfully added dummy data",
@@ -652,6 +654,33 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) => const AllGraphScreen(),
+                  ),
+                );
+              },
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+
+            GestureDetector(
+              child: Container(
+                padding: const EdgeInsets.all(8),
+                margin: const EdgeInsets.only(left: 5),
+                decoration: getBoxDecoration(),
+                height: 40,
+                width: 150,
+                child: const Center(
+                  child: Text(
+                    "Symptoms Pattern",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.white),
+                  ),
+                ),
+              ),
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const SymptomsPatternScreen(),
                   ),
                 );
               },

@@ -2,11 +2,13 @@ class MenstrualCycleSummaryData {
   KeyMatrix? keyMatrix;
   PredictionMatrix? predictionMatrix;
   List<PredictedSymptomsPatternToday>? predictedSymptomsPatternToday;
+  List<PredictedSymptomsPatternToday>? predictedSymptomsPatternTomorrow;
 
   MenstrualCycleSummaryData(
       {this.keyMatrix,
       this.predictionMatrix,
-      this.predictedSymptomsPatternToday});
+      this.predictedSymptomsPatternToday,
+      this.predictedSymptomsPatternTomorrow});
 
   MenstrualCycleSummaryData.fromJson(Map<String, dynamic> json) {
     keyMatrix = json['key_matrix'] != null
@@ -19,6 +21,13 @@ class MenstrualCycleSummaryData {
       predictedSymptomsPatternToday = <PredictedSymptomsPatternToday>[];
       json['predicted_symptoms_pattern_today'].forEach((v) {
         predictedSymptomsPatternToday!
+            .add(PredictedSymptomsPatternToday.fromJson(v));
+      });
+    }
+    if (json['predicted_symptoms_pattern_tomorrow'] != null) {
+      predictedSymptomsPatternTomorrow = <PredictedSymptomsPatternToday>[];
+      json['predicted_symptoms_pattern_tomorrow'].forEach((v) {
+        predictedSymptomsPatternTomorrow!
             .add(PredictedSymptomsPatternToday.fromJson(v));
       });
     }
@@ -36,6 +45,10 @@ class MenstrualCycleSummaryData {
       data['predicted_symptoms_pattern_today'] =
           predictedSymptomsPatternToday!.map((v) => v.toJson()).toList();
     }
+    if (predictedSymptomsPatternTomorrow != null) {
+      data['predicted_symptoms_pattern_tomorrow'] =
+          predictedSymptomsPatternTomorrow!.map((v) => v.toJson()).toList();
+    }
     return data;
   }
 }
@@ -50,6 +63,7 @@ class KeyMatrix {
   int? prevCycleLength;
   int? prevPeriodDuration;
   String? cycleRegularityScoreStatus;
+  String? currentPhase;
   double? cycleRegularityScore;
   String? periodRegularityScoreStatus;
   double? periodRegularityScore;
@@ -65,6 +79,7 @@ class KeyMatrix {
       this.prevPeriodDuration,
       this.cycleRegularityScoreStatus,
       this.cycleRegularityScore,
+      this.currentPhase,
       this.periodRegularityScoreStatus,
       this.periodRegularityScore});
 
@@ -74,6 +89,7 @@ class KeyMatrix {
     avgPeriodDuration = json['avg_period_duration'];
     isPeriodStart = json['is_period_start'];
     periodDay = json['period_day'];
+    currentPhase = json['current_phase'];
     isOvulationDay = json['is_ovulation_day'];
     prevCycleLength = json['prev_cycle_length'];
     prevPeriodDuration = json['prev_period_duration'];
@@ -90,6 +106,7 @@ class KeyMatrix {
     data['avg_period_duration'] = avgPeriodDuration;
     data['is_period_start'] = isPeriodStart;
     data['period_day'] = periodDay;
+    data['current_phase'] = currentPhase;
     data['is_ovulation_day'] = isOvulationDay;
     data['prev_cycle_length'] = prevCycleLength;
     data['prev_period_duration'] = prevPeriodDuration;
@@ -115,7 +132,7 @@ class PredictionMatrix {
 
   PredictionMatrix.fromJson(Map<String, dynamic> json) {
     nextPeriodDay = json['next_period_day'];
-    ovulationDay = json['ovulation_day'];
+    ovulationDay = json['next_ovulation_day'];
     isPeriodStartFromToday = json['is_period_start_from_today'];
     isPeriodStartFromTomorrow = json['is_period_start_from_tomorrow'];
   }
@@ -123,7 +140,7 @@ class PredictionMatrix {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['next_period_day'] = nextPeriodDay;
-    data['ovulation_day'] = ovulationDay;
+    data['next_ovulation_day'] = ovulationDay;
     data['is_period_start_from_today'] = isPeriodStartFromToday;
     data['is_period_start_from_tomorrow'] = isPeriodStartFromTomorrow;
     return data;
@@ -133,18 +150,23 @@ class PredictionMatrix {
 class PredictedSymptomsPatternToday {
   String? symptomName;
   int? occurrences;
+  String? accuracy = "0";
 
-  PredictedSymptomsPatternToday({this.symptomName, this.occurrences});
+  PredictedSymptomsPatternToday(
+      {this.symptomName, this.occurrences, this.accuracy});
 
   PredictedSymptomsPatternToday.fromJson(Map<String, dynamic> json) {
     symptomName = json['symptomName'];
     occurrences = json['occurrences'];
+    accuracy = json['accuracy'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['symptomName'] = symptomName;
     data['occurrences'] = occurrences;
+    data['accuracy'] = accuracy;
+
     return data;
   }
 }
