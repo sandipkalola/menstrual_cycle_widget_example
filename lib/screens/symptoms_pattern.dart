@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:menstrual_cycle_widget/menstrual_cycle_widget.dart';
 import 'package:menstrual_cycle_widget/ui/model/symptoms_pattern.dart';
+import 'package:menstrual_cycle_widget_example/util/colors.dart';
 import '../model/menstrual_summary.dart';
 import '../util/custom_widgets.dart';
 
@@ -13,8 +14,7 @@ class SymptomsPatternScreen extends StatefulWidget {
 
 class _SymptomsPatternState extends State<SymptomsPatternScreen> {
   final instance = MenstrualCycleWidget.instance!;
-  MenstrualCycleSummaryData menstrualCycleSummaryData =
-      MenstrualCycleSummaryData();
+  List<SymptomsPattern> dataList = [];
 
   @override
   void initState() {
@@ -23,27 +23,50 @@ class _SymptomsPatternState extends State<SymptomsPatternScreen> {
   }
 
   init() async {
-    List<SymptomsPattern> dataList =
-        await instance.getSymptomsPatternBasedOnCycle();
+    dataList = await instance.getSymptomsPatternBasedOnCycle();
     for (SymptomsPattern symptomsPattern in dataList) {
-      String data =
+      String data = "";
+      /*String data =
           "Name : ${symptomsPattern.symptomsName}\n${symptomsPattern.numberOfCount} times Found";
-      /* printMenstrualCycleLogs(
-          "symptomsPattern : ${symptomsPattern.symptomsName} : ${symptomsPattern.numberOfCount} times");*/
+        printMenstrualCycleLogs(
+          "symptomsPattern : ${symptomsPattern.symptomsName} : ${symptomsPattern.numberOfCount} times"); */
       for (CycleData cycleData in symptomsPattern.cycleData!) {
         data =
             "$data\nCycle Start Date : ${cycleData.cycleStartDate}\nCycle End Date:${cycleData.cycleEndDate}\nIs Current Cycle:${cycleData.isCurrentCycle} ";
+        printMenstrualCycleLogs("Data: $data");
         for (CycleDates cycleDates in cycleData.cycleDates!) {
           bool isFound = cycleDates.isFoundSymptoms ?? false;
-          if (isFound) {
-            /*  printMenstrualCycleLogs(
-                "Found Symptoms : ${cycleDates.cycleDate} ");*/
+          /* if (isFound) {
+               printMenstrualCycleLogs(
+                "Found Symptoms : ${cycleDates.cycleDate} ");
             data = "$data\n Symptoms Found:${cycleDates.cycleDate} ";
-          }
+          }*/
+          printMenstrualCycleLogs("Data: ${cycleDates.cycleDate}");
         }
       }
-      printMenstrualCycleLogs("Data: $data");
+      //  printMenstrualCycleLogs("Data: $data");
     }
+    //dataList 128
+    //printMenstrualCycleLogs("dataList ${dataList.length}");
+    setState(() {});
+  }
+
+  String getDateFormat(String date) {
+    if (date.isEmpty) {
+      return "Current";
+    }
+    return CalenderDateUtils.formatDayMonthShort(DateTime.parse(date));
+  }
+
+  String numberOfDay(CycleData cycleData) {
+    if (cycleData.cycleEndDate == null) {
+      return "Current";
+    }
+    int difference = DateTime.parse(cycleData.cycleEndDate!)
+            .difference(DateTime.parse(cycleData.cycleStartDate!))
+            .inDays +
+        1;
+    return "$difference Days";
   }
 
   @override
@@ -52,11 +75,115 @@ class _SymptomsPatternState extends State<SymptomsPatternScreen> {
       appBar: getAppBar("Symptoms Pattern"),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: (menstrualCycleSummaryData.keyMatrix != null)
-            ? Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [],
+        child: (dataList.isNotEmpty)
+            ? ListView.builder(
+                shrinkWrap: true,
+                scrollDirection: Axis.vertical,
+                physics: const ClampingScrollPhysics(),
+                itemCount: dataList.length,
+                itemBuilder: (context, symptomsIndex) {
+                  return Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Name: ${dataList[symptomsIndex].symptomsName}",
+                        style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: themeColor),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.15,
+                            child: ListView.builder(
+                              shrinkWrap: true,
+                              scrollDirection: Axis.vertical,
+                              physics: const ClampingScrollPhysics(),
+                              itemCount:
+                                  dataList[symptomsIndex].cycleData!.length,
+                              itemBuilder: (context, cycleIndex) {
+                                CycleData cycleData = dataList[symptomsIndex]
+                                    .cycleData![cycleIndex];
+                                return SizedBox(
+                                  height: 40,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(right: 5),
+                                    child: Text(
+                                      " ${getDateFormat(cycleData.cycleStartDate ?? "")}\n${numberOfDay(cycleData)}",
+                                      style: TextStyle(fontSize: 10),
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.75,
+                            child: Center(
+                              child: ListView.builder(
+                                shrinkWrap: true,
+                                scrollDirection: Axis.vertical,
+                                physics: const ClampingScrollPhysics(),
+                                itemCount:
+                                    dataList[symptomsIndex].cycleData!.length,
+                                itemBuilder: (context, cycleIndex) {
+                                  return Padding(
+                                    padding: const EdgeInsets.only(right: 5),
+                                    child: SizedBox(
+                                      height: 40,
+                                      child: ListView.builder(
+                                        shrinkWrap: true,
+                                        scrollDirection: Axis.horizontal,
+                                        itemCount: dataList[symptomsIndex]
+                                            .cycleData![cycleIndex]
+                                            .cycleDates!
+                                            .length,
+                                        itemBuilder: (context, subIndex) {
+                                          CycleDates cycleDates =
+                                              dataList[symptomsIndex]
+                                                  .cycleData![cycleIndex]
+                                                  .cycleDates![subIndex];
+
+                                          return Padding(
+                                            padding: const EdgeInsets.only(
+                                                bottom: 10, right: 5),
+                                            child: Container(
+                                              width: 15,
+                                              height: 15,
+                                              decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                color: (cycleDates
+                                                        .isFoundSymptoms!)
+                                                    ? Color(0xFF4CAF50)
+                                                    : Color(0xFFD3D3D3),
+                                              ),
+                                              child: Center(
+                                                child: Text(
+                                                  "${subIndex + 1}",
+                                                  style: TextStyle(fontSize: 5),
+                                                ),
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  );
+                },
               )
             : const Text(
                 "No data found",

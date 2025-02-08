@@ -26,6 +26,7 @@ class MenstrualCycleViewScreen extends StatelessWidget {
                         displayWidget: MenstrualCyclePhaseView(
                           size: 300,
                           theme: MenstrualCycleTheme.basic,
+                          viewType: MenstrualCycleViewType.none,
                           isRemoveBackgroundPhaseColor: false,
                           spaceBtnTitleMessage: 5,
                           centralCircleSize: 100,

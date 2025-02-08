@@ -39,6 +39,10 @@ class _PeriodRangeListState extends State<PeriodRangeList> {
                   Text(
                       "Period Duration: ${widget.periodDateRange![index].periodDuration}"),
                   Text(
+                      "Cycle Start Date: ${widget.periodDateRange![index].cycleStartDate}"),
+                  Text(
+                      "Cycle End Date: ${widget.periodDateRange![index].cycleEndDate}"),
+                  Text(
                       "Cycle Duration: ${widget.periodDateRange![index].cycleLength}"),
                   Text(
                       "Period Range: ${widget.periodDateRange![index].allPeriodDates.toString()}"),
