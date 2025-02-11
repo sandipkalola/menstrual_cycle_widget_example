@@ -22,14 +22,16 @@ class MenstrualCycleViewScreen extends StatelessWidget {
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => const DisplayWidget(
+                    builder: (context) => DisplayWidget(
                         displayWidget: MenstrualCyclePhaseView(
                           size: 300,
                           theme: MenstrualCycleTheme.basic,
-                          viewType: MenstrualCycleViewType.none,
                           isRemoveBackgroundPhaseColor: false,
                           spaceBtnTitleMessage: 5,
                           centralCircleSize: 100,
+                          onDayClick: (day, date1) {
+                            printMenstrualCycleLogs("Selected Day $day $date1");
+                          },
                           centralCircleBackgroundColor: Color(0xFFE1F5FE),
                           isAutoSetData: true,
                         ),
@@ -46,13 +48,16 @@ class MenstrualCycleViewScreen extends StatelessWidget {
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => const DisplayWidget(
+                    builder: (context) => DisplayWidget(
                         displayWidget: MenstrualCyclePhaseView(
                           size: 300,
                           theme: MenstrualCycleTheme.circle,
                           isRemoveBackgroundPhaseColor: false,
                           spaceBtnTitleMessage: 5,
                           centralCircleSize: 100,
+                          onDayClick: (day, date1) {
+                            printMenstrualCycleLogs("Selected Day $day $date1");
+                          },
                           centralCircleBackgroundColor: Color(0xFFE1F5FE),
                           isAutoSetData: true,
                         ),
@@ -69,7 +74,7 @@ class MenstrualCycleViewScreen extends StatelessWidget {
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => const DisplayWidget(
+                    builder: (context) => DisplayWidget(
                         displayWidget: MenstrualCyclePhaseView(
                           size: 300,
                           theme: MenstrualCycleTheme.arcs,
@@ -77,6 +82,9 @@ class MenstrualCycleViewScreen extends StatelessWidget {
                           centralCircleSize: 100,
                           centralCircleBackgroundColor: Color(0xFFE1F5FE),
                           isAutoSetData: true,
+                          onDayClick: (day, date1) {
+                            printMenstrualCycleLogs("Selected Day $day $date1");
+                          },
                         ),
                         title: "MenstrualCycleTheme.arcs"),
                   ),
