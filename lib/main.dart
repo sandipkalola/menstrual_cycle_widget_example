@@ -688,6 +688,37 @@ class _MyHomePageState extends State<MyHomePage> {
             const SizedBox(
               height: 10,
             ),
+            GestureDetector(
+              child: Container(
+                padding: const EdgeInsets.all(8),
+                margin: const EdgeInsets.only(left: 5),
+                decoration: getBoxDecoration(),
+                height: 40,
+                width: 150,
+                child: const Center(
+                  child: Text(
+                    "Pregnancy View",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.white),
+                  ),
+                ),
+              ),
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => DisplayWidget(
+                        displayWidget: PregnancyView(
+                          size: 300,
+                          spaceBtnTitleMessage: 5,
+                        ),
+                        title: "Pregnancy View"),
+                  ),
+                );
+              },
+            ),
+            const SizedBox(
+              height: 10,
+            ),
           ],
         ),
       ), // This trailing comma makes auto-formatting nicer for build methods.
