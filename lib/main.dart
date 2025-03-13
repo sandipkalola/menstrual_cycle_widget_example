@@ -709,7 +709,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     builder: (context) => DisplayWidget(
                         displayWidget: PregnancyView(
                           size: 300,
-                          spaceBtnTitleMessage: 5,
+                          imageUrl:
+                              "https://apps.meetmighty.com/mighty-era/storage/1426/week-1-to-42_week_39.png",
                         ),
                         title: "Pregnancy View"),
                   ),
