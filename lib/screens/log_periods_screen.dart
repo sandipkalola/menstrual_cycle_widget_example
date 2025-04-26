@@ -161,7 +161,7 @@ class _LogPeriodsScreenState extends State<LogPeriodsScreen> {
               builder: (context) => MenstrualLogPeriodView(
                 displaySymptomsData: DisplaySymptomsData(),
                 onError: onError(),
-                isShowCustomSymptomsOnly: true,
+                isShowCustomSymptomsOnly: false,
                 customSymptomsList: [
                   SymptomsCategory(
                       categoryName: "My Cal",

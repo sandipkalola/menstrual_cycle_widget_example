@@ -84,6 +84,7 @@ class MenstrualCycleViewScreen extends StatelessWidget {
                           isAutoSetData: true,
                           onDayClick: (day, date1) {
                             printMenstrualCycleLogs("Selected Day $day $date1");
+
                           },
                         ),
                         title: "MenstrualCycleTheme.arcs"),

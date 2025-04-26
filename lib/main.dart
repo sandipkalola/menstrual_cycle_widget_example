@@ -19,7 +19,10 @@ import 'util/custom_widgets.dart';
 
 String menstrualCycleDuration = "28";
 String periodDuration = "5";
+String staticCustomerId = "2";
+
 String appLanguage = "English";
+Map<String, dynamic> backupData = {};
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -78,7 +81,7 @@ class _MyHomePageState extends State<MyHomePage> {
     instance.updateConfiguration(
         cycleLength: int.parse(menstrualCycleDuration),
         periodDuration: int.parse(periodDuration),
-        customerId: "1",
+        customerId: staticCustomerId,
         // fontFamily: 'CustomFont',
         defaultLanguage: getLanguage());
   }
@@ -715,6 +718,89 @@ class _MyHomePageState extends State<MyHomePage> {
                         title: "Pregnancy View"),
                   ),
                 );
+              },
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            GestureDetector(
+              child: Container(
+                padding: const EdgeInsets.all(8),
+                margin: const EdgeInsets.only(left: 5),
+                decoration: getBoxDecoration(),
+                height: 40,
+                width: 150,
+                child: const Center(
+                  child: Text(
+                    "Backup Data",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.white),
+                  ),
+                ),
+              ),
+              onTap: () async {
+                Map<String, dynamic> summaryData =
+                    await instance.getBackupOfMenstrualCycleData();
+                // printMenstrualCycleLogs("summaryData ${summaryData.toString()}");
+                if (summaryData.isNotEmpty) {
+                  backupData = summaryData;
+                  printMenstrualCycleLogs("Data: ${summaryData.toString()}");
+                  setState(() {});
+                }
+              },
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            GestureDetector(
+              child: Container(
+                padding: const EdgeInsets.all(8),
+                margin: const EdgeInsets.only(left: 5),
+                decoration: getBoxDecoration(),
+                height: 40,
+                width: 150,
+                child: const Center(
+                  child: Text(
+                    "Clear All Data",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.white),
+                  ),
+                ),
+              ),
+              onTap: () async {
+                await instance.clearAllData();
+                Fluttertoast.showToast(
+                  msg: "Clear all data successfully",
+                  toastLength: Toast.LENGTH_LONG,
+                );
+              },
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            GestureDetector(
+              child: Container(
+                padding: const EdgeInsets.all(8),
+                margin: const EdgeInsets.only(left: 5),
+                decoration: getBoxDecoration(),
+                height: 40,
+                width: 150,
+                child: const Center(
+                  child: Text(
+                    "Restore Data",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.white),
+                  ),
+                ),
+              ),
+              onTap: () async {
+                if (backupData.isNotEmpty) {
+                  await instance.restoreBackupOfMenstrualCycleData(
+                      backupData: backupData,
+                      customerId: staticCustomerId);
+                } else {
+                  printMenstrualCycleLogs("Null Data for backup");
+                }
               },
             ),
             const SizedBox(
