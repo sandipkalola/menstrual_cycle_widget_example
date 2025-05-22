@@ -276,6 +276,26 @@ class AllGraphScreen extends StatelessWidget {
                 );
               },
             ),
+            const SizedBox(
+              height: 10,
+            ),
+            GestureDetector(
+              child: textView("Estrogen/Progesterone graph"),
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => GraphView(
+                      title: "Estrogen/Progesterone graph",
+                      graphView: SizedBox(
+                        height: 300,
+                        width: MediaQuery.of(context).size.width,
+                        child: EstrogenProgesteroneGraph(),
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
           ],
         ),
       ), // This trailing comma makes auto-formatting nicer for build methods.

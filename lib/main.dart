@@ -796,8 +796,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onTap: () async {
                 if (backupData.isNotEmpty) {
                   await instance.restoreBackupOfMenstrualCycleData(
-                      backupData: backupData,
-                      customerId: staticCustomerId);
+                      backupData: backupData, customerId: staticCustomerId);
                 } else {
                   printMenstrualCycleLogs("Null Data for backup");
                 }
