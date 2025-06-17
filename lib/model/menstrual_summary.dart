@@ -1,14 +1,18 @@
+import 'package:menstrual_cycle_widget/ui/model/phases_percentage.dart';
+
 class MenstrualCycleSummaryData {
   KeyMatrix? keyMatrix;
   PredictionMatrix? predictionMatrix;
   List<PredictedSymptomsPatternToday>? predictedSymptomsPatternToday;
   List<PredictedSymptomsPatternToday>? predictedSymptomsPatternTomorrow;
+  List<SymptomsPatterns>? symptomsPatternsReport;
 
   MenstrualCycleSummaryData(
       {this.keyMatrix,
       this.predictionMatrix,
       this.predictedSymptomsPatternToday,
-      this.predictedSymptomsPatternTomorrow});
+      this.predictedSymptomsPatternTomorrow,
+      this.symptomsPatternsReport});
 
   MenstrualCycleSummaryData.fromJson(Map<String, dynamic> json) {
     keyMatrix = json['key_matrix'] != null
@@ -22,6 +26,12 @@ class MenstrualCycleSummaryData {
       json['predicted_symptoms_pattern_today'].forEach((v) {
         predictedSymptomsPatternToday!
             .add(PredictedSymptomsPatternToday.fromJson(v));
+      });
+    }
+    if (json['symptom_patterns_summary'] != null) {
+      symptomsPatternsReport = <SymptomsPatterns>[];
+      json['symptom_patterns_summary'].forEach((v) {
+        symptomsPatternsReport!.add(SymptomsPatterns.fromJson(v));
       });
     }
     if (json['predicted_symptoms_pattern_tomorrow'] != null) {
@@ -44,6 +54,10 @@ class MenstrualCycleSummaryData {
     if (predictedSymptomsPatternToday != null) {
       data['predicted_symptoms_pattern_today'] =
           predictedSymptomsPatternToday!.map((v) => v.toJson()).toList();
+    }
+    if (symptomsPatternsReport != null) {
+      data['symptom_patterns_summary'] =
+          symptomsPatternsReport!.map((v) => v.toJson()).toList();
     }
     if (predictedSymptomsPatternTomorrow != null) {
       data['predicted_symptoms_pattern_tomorrow'] =
@@ -143,6 +157,36 @@ class PredictionMatrix {
     data['next_ovulation_day'] = ovulationDay;
     data['is_period_start_from_today'] = isPeriodStartFromToday;
     data['is_period_start_from_tomorrow'] = isPeriodStartFromTomorrow;
+    return data;
+  }
+}
+
+class SymptomsPatterns {
+  SymptomsPatterns({this.name, this.percentageOfCycles, this.phases});
+
+  String? name;
+  int? percentageOfCycles = 0;
+  List<PhasePercentage>? phases = [];
+
+  SymptomsPatterns.fromJson(Map<String, dynamic> json) {
+    name = json['symptom_name'];
+    percentageOfCycles = json['percentage_of_cycles'];
+    if (json['phases'] != null) {
+      phases = <PhasePercentage>[];
+      json['phases'].forEach((v) {
+        phases!.add(PhasePercentage.fromJson(v));
+      });
+    }
+  }
+
+  // Convert the object to a JSON-compatible map
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['symptom_name'] = name;
+    data['percentage_of_cycles'] = percentageOfCycles;
+    if (phases != null) {
+      data['phases'] = phases!.map((v) => v.toJson()).toList();
+    }
     return data;
   }
 }

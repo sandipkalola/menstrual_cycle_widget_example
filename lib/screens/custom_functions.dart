@@ -47,9 +47,10 @@ class _CustomFunctionsState extends State<CustomFunctions> {
                 "Previous Period Date: ${(lastPeriodDate == null) ? "N/A" : _dateFormat.format(lastPeriodDate!)}"),
             GestureDetector(
               onTap: () async {
-                printMenstrualCycleLogs(
-                    "Json Data ${await instance.getMenstrualCycleSummary()}");
-                lastPeriodDate = await instance.getPreviousPeriodDate();
+                /*   printMenstrualCycleLogs(
+                    "Json Data ${await instance.getMenstrualCycleSummary()}");*/
+                lastPeriodDate =
+                    DateTime.parse(instance.getPreviousPeriodDay());
                 if (lastPeriodDate!.year == 1971) {
                   if (kDebugMode) {
                     print(

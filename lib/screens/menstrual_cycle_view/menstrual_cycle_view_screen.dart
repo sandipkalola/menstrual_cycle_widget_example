@@ -29,7 +29,6 @@ class MenstrualCycleViewScreen extends StatelessWidget {
                           isRemoveBackgroundPhaseColor: false,
                           spaceBtnTitleMessage: 5,
                           centralCircleSize: 100,
-
                           onDayClick: (day, date1) {
                             printMenstrualCycleLogs("Selected Day $day $date1");
                           },
@@ -85,7 +84,6 @@ class MenstrualCycleViewScreen extends StatelessWidget {
                           isAutoSetData: true,
                           onDayClick: (day, date1) {
                             printMenstrualCycleLogs("Selected Day $day $date1");
-
                           },
                         ),
                         title: "MenstrualCycleTheme.arcs"),

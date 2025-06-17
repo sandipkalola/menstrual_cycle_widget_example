@@ -9,6 +9,7 @@ import 'package:restart_app/restart_app.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'model/menstrual_summary.dart';
 import 'screens/custom_functions.dart';
 import 'screens/graph/all_graph_screen.dart';
 import 'screens/log_periods_screen.dart';
@@ -402,410 +403,463 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      body: Center(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            GestureDetector(
-              onTap: () async {
-                if (!isAddingData) {
-                  Fluttertoast.showToast(
-                    msg: "Adding dummy data. please wait",
-                    toastLength: Toast.LENGTH_SHORT,
-                  );
-                  instance.addDummyData(
-                    numberOfDay: 365,
-                    onSuccess: () {
-                      Fluttertoast.showToast(
-                        msg: "Successfully added dummy data",
-                        toastLength: Toast.LENGTH_LONG,
-                      );
-                      setState(() {
-                        isAddingData = false;
-                      });
-                    },
-                    onError: () {
-                      Fluttertoast.showToast(
-                        msg: "Error while adding dummy data",
-                        toastLength: Toast.LENGTH_LONG,
-                      );
-                      setState(() {
-                        isAddingData = false;
-                      });
-                    },
-                  );
-                }
-                setState(() {
-                  isAddingData = true;
-                });
-              },
-              child: Container(
-                padding: const EdgeInsets.all(8),
-                margin: const EdgeInsets.only(left: 5),
-                decoration: getBoxDecoration(),
-                height: 40,
-                width: 170,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    (isAddingData)
-                        ? const SizedBox(
-                            width: 20,
-                            height: 20,
-                            child: CircularProgressIndicator(
-                              color: Colors.white,
-                            ),
-                          )
-                        : const SizedBox(),
-                    const SizedBox(
-                      width: 10,
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            spacing: 1,
+            children: <Widget>[
+              SizedBox(
+                height: 20,
+              ),
+              GestureDetector(
+                onTap: () async {
+                  if (!isAddingData) {
+                    Fluttertoast.showToast(
+                      msg: "Adding dummy data. please wait",
+                      toastLength: Toast.LENGTH_SHORT,
+                    );
+                    instance.addDummyData(
+                      numberOfDay: 365,
+                      onSuccess: () {
+                        Fluttertoast.showToast(
+                          msg: "Successfully added dummy data",
+                          toastLength: Toast.LENGTH_LONG,
+                        );
+                        setState(() {
+                          isAddingData = false;
+                        });
+                      },
+                      onError: () {
+                        Fluttertoast.showToast(
+                          msg: "Error while adding dummy data",
+                          toastLength: Toast.LENGTH_LONG,
+                        );
+                        setState(() {
+                          isAddingData = false;
+                        });
+                      },
+                    );
+                  }
+                  setState(() {
+                    isAddingData = true;
+                  });
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(8),
+                  margin: const EdgeInsets.only(left: 5),
+                  decoration: getBoxDecoration(),
+                  height: 40,
+                  width: 170,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      (isAddingData)
+                          ? const SizedBox(
+                              width: 20,
+                              height: 20,
+                              child: CircularProgressIndicator(
+                                color: Colors.white,
+                              ),
+                            )
+                          : const SizedBox(),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      const Text(
+                        "Add Dummy Data",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, color: Colors.white),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              // Monthly Calender View
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => DisplayWidget(
+                          displayWidget: MenstrualCycleMonthlyCalenderView(
+                            themeColor: Colors.black,
+                            daySelectedColor: Colors.blue,
+                            hideInfoView: false,
+                            onDataChanged: (value) {},
+                          ),
+                          title: "Monthly Calender View"),
                     ),
-                    const Text(
-                      "Add Dummy Data",
+                  );
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: getBoxDecoration(),
+                    child: const Text(
+                      "Monthly Calender View",
                       style: TextStyle(
                           fontWeight: FontWeight.bold, color: Colors.white),
                     ),
-                  ],
+                  ),
                 ),
               ),
-            ),
-            // Monthly Calender View
-            GestureDetector(
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => DisplayWidget(
-                        displayWidget: MenstrualCycleMonthlyCalenderView(
-                          themeColor: Colors.black,
-                          daySelectedColor: Colors.blue,
-                          hideInfoView: false,
-                          onDataChanged: (value) {},
-                        ),
-                        title: "Monthly Calender View"),
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => DisplayWidget(
+                          displayWidget: MenstrualCycleCalenderView(
+                            themeColor: Colors.black,
+                            daySelectedColor: Colors.blue,
+                            backgroundColorCode: Colors.white,
+                            hideInfoView: false,
+                            onDateSelected: (date) {},
+                            onDataChanged: (value) {},
+                            hideBottomBar: false,
+                            hideLogPeriodButton: false,
+                            isExpanded: false,
+                          ),
+                          title: "Calender View"),
+                    ),
+                  );
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: getBoxDecoration(),
+                    child: const Text(
+                      "Calender View",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, color: Colors.white),
+                    ),
                   ),
-                );
-              },
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                ),
+              ),
+              GestureDetector(
                 child: Container(
                   padding: const EdgeInsets.all(8),
+                  margin: const EdgeInsets.only(left: 5),
                   decoration: getBoxDecoration(),
-                  child: const Text(
-                    "Monthly Calender View",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, color: Colors.white),
+                  height: 40,
+                  width: 230,
+                  child: const Center(
+                    child: Text(
+                      "Menstrual Cycle Phase View",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, color: Colors.white),
+                    ),
                   ),
                 ),
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const MenstrualCycleViewScreen(),
+                    ),
+                  );
+                },
               ),
-            ),
-            GestureDetector(
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => DisplayWidget(
-                        displayWidget: MenstrualCycleCalenderView(
-                          themeColor: Colors.black,
-                          daySelectedColor: Colors.blue,
-                          backgroundColorCode: Colors.white,
-                          hideInfoView: false,
-                          onDateSelected: (date) {},
-                          onDataChanged: (value) {},
-                          hideBottomBar: false,
-                          hideLogPeriodButton: false,
-                          isExpanded: false,
-                        ),
-                        title: "Calender View"),
-                  ),
-                );
-              },
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
+              const SizedBox(
+                height: 10,
+              ),
+              GestureDetector(
                 child: Container(
                   padding: const EdgeInsets.all(8),
+                  margin: const EdgeInsets.only(left: 5),
                   decoration: getBoxDecoration(),
-                  child: const Text(
-                    "Calender View",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, color: Colors.white),
+                  height: 40,
+                  width: 150,
+                  child: const Center(
+                    child: Text(
+                      "Get Full Summary",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, color: Colors.white),
+                    ),
                   ),
                 ),
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const SummaryView(),
+                    ),
+                  );
+                },
               ),
-            ),
-            GestureDetector(
-              child: Container(
-                padding: const EdgeInsets.all(8),
-                margin: const EdgeInsets.only(left: 5),
-                decoration: getBoxDecoration(),
-                height: 40,
-                width: 230,
-                child: const Center(
-                  child: Text(
-                    "Menstrual Cycle Phase View",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, color: Colors.white),
+              const SizedBox(
+                height: 10,
+              ),
+              GestureDetector(
+                child: Container(
+                  padding: const EdgeInsets.all(8),
+                  margin: const EdgeInsets.only(left: 5),
+                  decoration: getBoxDecoration(),
+                  height: 40,
+                  width: 150,
+                  child: const Center(
+                    child: Text(
+                      "Custom Functions",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, color: Colors.white),
+                    ),
                   ),
                 ),
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const CustomFunctions(),
+                    ),
+                  );
+                },
               ),
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const MenstrualCycleViewScreen(),
-                  ),
-                );
-              },
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            GestureDetector(
-              child: Container(
-                padding: const EdgeInsets.all(8),
-                margin: const EdgeInsets.only(left: 5),
-                decoration: getBoxDecoration(),
-                height: 40,
-                width: 150,
-                child: const Center(
-                  child: Text(
-                    "Get Full Summary",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, color: Colors.white),
+              const SizedBox(
+                height: 10,
+              ),
+              GestureDetector(
+                child: Container(
+                  padding: const EdgeInsets.all(8),
+                  margin: const EdgeInsets.only(left: 5),
+                  decoration: getBoxDecoration(),
+                  height: 40,
+                  width: 150,
+                  child: const Center(
+                    child: Text(
+                      "Log Periods",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, color: Colors.white),
+                    ),
                   ),
                 ),
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const LogPeriodsScreen(),
+                    ),
+                  );
+                },
               ),
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const SummaryView(),
-                  ),
-                );
-              },
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            GestureDetector(
-              child: Container(
-                padding: const EdgeInsets.all(8),
-                margin: const EdgeInsets.only(left: 5),
-                decoration: getBoxDecoration(),
-                height: 40,
-                width: 150,
-                child: const Center(
-                  child: Text(
-                    "Custom Functions",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, color: Colors.white),
+              const SizedBox(
+                height: 10,
+              ),
+              GestureDetector(
+                child: Container(
+                  padding: const EdgeInsets.all(8),
+                  margin: const EdgeInsets.only(left: 5),
+                  decoration: getBoxDecoration(),
+                  height: 40,
+                  width: 150,
+                  child: const Center(
+                    child: Text(
+                      "All Graph example",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, color: Colors.white),
+                    ),
                   ),
                 ),
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const AllGraphScreen(),
+                    ),
+                  );
+                },
               ),
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const CustomFunctions(),
-                  ),
-                );
-              },
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            GestureDetector(
-              child: Container(
-                padding: const EdgeInsets.all(8),
-                margin: const EdgeInsets.only(left: 5),
-                decoration: getBoxDecoration(),
-                height: 40,
-                width: 150,
-                child: const Center(
-                  child: Text(
-                    "Log Periods",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, color: Colors.white),
-                  ),
-                ),
+              const SizedBox(
+                height: 10,
               ),
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const LogPeriodsScreen(),
-                  ),
-                );
-              },
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            GestureDetector(
-              child: Container(
-                padding: const EdgeInsets.all(8),
-                margin: const EdgeInsets.only(left: 5),
-                decoration: getBoxDecoration(),
-                height: 40,
-                width: 150,
-                child: const Center(
-                  child: Text(
-                    "All Graph example",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, color: Colors.white),
-                  ),
-                ),
-              ),
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const AllGraphScreen(),
-                  ),
-                );
-              },
-            ),
-            const SizedBox(
-              height: 10,
-            ),
 
-            GestureDetector(
-              child: Container(
-                padding: const EdgeInsets.all(8),
-                margin: const EdgeInsets.only(left: 5),
-                decoration: getBoxDecoration(),
-                height: 40,
-                width: 150,
-                child: const Center(
-                  child: Text(
-                    "Symptoms Pattern",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, color: Colors.white),
+              GestureDetector(
+                child: Container(
+                  padding: const EdgeInsets.all(8),
+                  margin: const EdgeInsets.only(left: 5),
+                  decoration: getBoxDecoration(),
+                  height: 40,
+                  width: 150,
+                  child: const Center(
+                    child: Text(
+                      "Symptoms Pattern",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, color: Colors.white),
+                    ),
                   ),
                 ),
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const SymptomsPatternScreen(),
+                    ),
+                  );
+                },
               ),
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const SymptomsPatternScreen(),
-                  ),
-                );
-              },
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            GestureDetector(
-              child: Container(
-                padding: const EdgeInsets.all(8),
-                margin: const EdgeInsets.only(left: 5),
-                decoration: getBoxDecoration(),
-                height: 40,
-                width: 150,
-                child: const Center(
-                  child: Text(
-                    "Pregnancy View",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, color: Colors.white),
+              const SizedBox(
+                height: 10,
+              ),
+              GestureDetector(
+                child: Container(
+                  padding: const EdgeInsets.all(8),
+                  margin: const EdgeInsets.only(left: 5),
+                  decoration: getBoxDecoration(),
+                  height: 40,
+                  width: 150,
+                  child: const Center(
+                    child: Text(
+                      "Health Report",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, color: Colors.white),
+                    ),
                   ),
                 ),
+                onTap: () async {
+
+                  printMenstrualCycleLogs("---------------");
+                  Map<String, dynamic> summaryData =
+                      await instance.getMenstrualCycleReportData();
+
+                  if (summaryData.isNotEmpty) {
+                    MenstrualCycleSummaryData menstrualCycleSummaryData =
+                        MenstrualCycleSummaryData.fromJson(summaryData);
+
+                    for (int i = 0;
+                        i <
+                            menstrualCycleSummaryData
+                                .symptomsPatternsReport!.length;
+                        i++) {
+                      printMenstrualCycleLogs(
+                          "${menstrualCycleSummaryData.symptomsPatternsReport![i].name} ${menstrualCycleSummaryData.symptomsPatternsReport![i].percentageOfCycles}%");
+                      for (int j = 0;
+                          j <
+                              menstrualCycleSummaryData
+                                  .symptomsPatternsReport![i].phases!.length;
+                          j++) {
+                        printMenstrualCycleLogs(
+                            "${menstrualCycleSummaryData.symptomsPatternsReport![i].phases![j].phaseName} ${menstrualCycleSummaryData.symptomsPatternsReport![i].phases![j].percentage}%");
+                      }
+                      printMenstrualCycleLogs("---------------");
+                    }
+                  }
+                },
               ),
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => DisplayWidget(
-                        displayWidget: PregnancyView(
-                          size: 300,
-                          imageUrl:
-                              "https://apps.meetmighty.com/mighty-era/storage/1426/week-1-to-42_week_39.png",
-                        ),
-                        title: "Pregnancy View"),
-                  ),
-                );
-              },
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            GestureDetector(
-              child: Container(
-                padding: const EdgeInsets.all(8),
-                margin: const EdgeInsets.only(left: 5),
-                decoration: getBoxDecoration(),
-                height: 40,
-                width: 150,
-                child: const Center(
-                  child: Text(
-                    "Backup Data",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, color: Colors.white),
-                  ),
-                ),
+              const SizedBox(
+                height: 10,
               ),
-              onTap: () async {
-                Map<String, dynamic> summaryData =
-                    await instance.getBackupOfMenstrualCycleData();
-                // printMenstrualCycleLogs("summaryData ${summaryData.toString()}");
-                if (summaryData.isNotEmpty) {
-                  backupData = summaryData;
-                  printMenstrualCycleLogs("Data: ${summaryData.toString()}");
-                  setState(() {});
-                }
-              },
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            GestureDetector(
-              child: Container(
-                padding: const EdgeInsets.all(8),
-                margin: const EdgeInsets.only(left: 5),
-                decoration: getBoxDecoration(),
-                height: 40,
-                width: 150,
-                child: const Center(
-                  child: Text(
-                    "Clear All Data",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, color: Colors.white),
+              GestureDetector(
+                child: Container(
+                  padding: const EdgeInsets.all(8),
+                  margin: const EdgeInsets.only(left: 5),
+                  decoration: getBoxDecoration(),
+                  height: 40,
+                  width: 150,
+                  child: const Center(
+                    child: Text(
+                      "Pregnancy View",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, color: Colors.white),
+                    ),
                   ),
                 ),
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => DisplayWidget(
+                          displayWidget: PregnancyView(
+                            size: 300,
+                            imageUrl:
+                                "https://apps.meetmighty.com/mighty-era/storage/1426/week-1-to-42_week_39.png",
+                          ),
+                          title: "Pregnancy View"),
+                    ),
+                  );
+                },
               ),
-              onTap: () async {
-                await instance.clearAllData();
-                Fluttertoast.showToast(
-                  msg: "Clear all data successfully",
-                  toastLength: Toast.LENGTH_LONG,
-                );
-              },
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            GestureDetector(
-              child: Container(
-                padding: const EdgeInsets.all(8),
-                margin: const EdgeInsets.only(left: 5),
-                decoration: getBoxDecoration(),
-                height: 40,
-                width: 150,
-                child: const Center(
-                  child: Text(
-                    "Restore Data",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, color: Colors.white),
+              const SizedBox(
+                height: 10,
+              ),
+              GestureDetector(
+                child: Container(
+                  padding: const EdgeInsets.all(8),
+                  margin: const EdgeInsets.only(left: 5),
+                  decoration: getBoxDecoration(),
+                  height: 40,
+                  width: 150,
+                  child: const Center(
+                    child: Text(
+                      "Backup Data",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, color: Colors.white),
+                    ),
                   ),
                 ),
+                onTap: () async {
+                  Map<String, dynamic> summaryData =
+                      await instance.getBackupOfMenstrualCycleData();
+                  // printMenstrualCycleLogs("summaryData ${summaryData.toString()}");
+                  if (summaryData.isNotEmpty) {
+                    backupData = summaryData;
+                    printMenstrualCycleLogs("Data: ${summaryData.toString()}");
+                    setState(() {});
+                  }
+                },
               ),
-              onTap: () async {
-                if (backupData.isNotEmpty) {
-                  await instance.restoreBackupOfMenstrualCycleData(
-                      backupData: backupData, customerId: staticCustomerId);
-                } else {
-                  printMenstrualCycleLogs("Null Data for backup");
-                }
-              },
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-          ],
+              const SizedBox(
+                height: 10,
+              ),
+              GestureDetector(
+                child: Container(
+                  padding: const EdgeInsets.all(8),
+                  margin: const EdgeInsets.only(left: 5),
+                  decoration: getBoxDecoration(),
+                  height: 40,
+                  width: 150,
+                  child: const Center(
+                    child: Text(
+                      "Clear All Data",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, color: Colors.white),
+                    ),
+                  ),
+                ),
+                onTap: () async {
+                  await instance.clearAllData();
+                  Fluttertoast.showToast(
+                    msg: "Clear all data successfully",
+                    toastLength: Toast.LENGTH_LONG,
+                  );
+                },
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              GestureDetector(
+                child: Container(
+                  padding: const EdgeInsets.all(8),
+                  margin: const EdgeInsets.only(left: 5),
+                  decoration: getBoxDecoration(),
+                  height: 40,
+                  width: 150,
+                  child: const Center(
+                    child: Text(
+                      "Restore Data",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, color: Colors.white),
+                    ),
+                  ),
+                ),
+                onTap: () async {
+                  if (backupData.isNotEmpty) {
+                    await instance.restoreBackupOfMenstrualCycleData(
+                        backupData: backupData, customerId: staticCustomerId);
+                  } else {
+                    printMenstrualCycleLogs("Null Data for backup");
+                  }
+                },
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+            ],
+          ),
         ),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
