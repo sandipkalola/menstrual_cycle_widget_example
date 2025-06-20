@@ -163,15 +163,36 @@ class _LogPeriodsScreenState extends State<LogPeriodsScreen> {
                 onError: onError(),
                 isShowCustomSymptomsOnly: false,
                 customSymptomsList: [
-                  SymptomsCategory(
-                      categoryName: "My Cal",
+                  /*SymptomsCategory(
+                      categoryName: "Feelings",
                       categoryId: 11,
                       categoryColor: "FF0000",
                       symptomsData: [
-                        SymptomsData(symptomName: "My Sym 1", symptomId: 11),
-                        SymptomsData(symptomName: "My Sym 2", symptomId: 12),
-                        SymptomsData(symptomName: "Sym 3", symptomId: 232)
-                      ])
+                        SymptomsData(symptomName: "Excited", symptomId: 11),
+                        SymptomsData(symptomName: "Anxiety", symptomId: 12),
+                        SymptomsData(symptomName: "Grateful", symptomId: 13),
+                        SymptomsData(symptomName: "Insecure", symptomId: 14),
+                        SymptomsData(symptomName: "Angry", symptomId: 15)
+                      ]),
+                  SymptomsCategory(
+                      categoryName: "Mind",
+                      categoryId: 12,
+                      categoryColor: "FF0000",
+                      symptomsData: [
+                        SymptomsData(symptomName: "Unproductive", symptomId: 21),
+                        SymptomsData(symptomName: "Productive", symptomId: 22),
+                        SymptomsData(symptomName: "Creative", symptomId: 23),
+                        SymptomsData(symptomName: "Unmotivated", symptomId: 24)
+                      ]),
+                  SymptomsCategory(
+                      categoryName: "Sexual Life",
+                      categoryId: 13,
+                      categoryColor: "FF0000",
+                      symptomsData: [
+                        SymptomsData(symptomName: "No orgasm", symptomId: 31),
+                        SymptomsData(symptomName: "Orgasm", symptomId: 32),
+                        SymptomsData(symptomName: "Sex toys", symptomId: 33)
+                      ])*/
                 ],
                 onSuccess: (int id) {
                   onSuccess();
